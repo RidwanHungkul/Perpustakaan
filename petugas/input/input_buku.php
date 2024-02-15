@@ -37,10 +37,7 @@ $result3 = mysqli_query($koneksi, $sql3);
 </head>
 <body class="hold-transitionx  sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
-<nav class="main-header navbar navbar-expand navbar-light" style="background-color:#fff">
-    <!-- Left navbar links -->
-
-    <!-- Right navbar links -->
+  <nav class="main-header navbar navbar-expand navbar-light" style="background-color:#fff">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
@@ -53,7 +50,7 @@ $result3 = mysqli_query($koneksi, $sql3);
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
+    <!-- user -->
     <a href="#" class="brand-link">
       <span class="brand-text font-weight-light">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
     </a>
@@ -85,73 +82,73 @@ $result3 = mysqli_query($koneksi, $sql3);
   </aside>
 
   <div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <?php if($result){
-                $riw = mysqli_fetch_assoc($result1);
-              ?>
-                <div class="modal-header">
-                    <h4 class="modal-title" id="editModalLabel">Tambah Buku</h4>
-                    <a href="../buku.php"><button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button></a>
-                </div>
-                <form action="../proses/proses_tambah_buku.php" method="post" enctype="multipart/form-data">
-                  <div class="modal-body">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <?php if($result){
+          $riw = mysqli_fetch_assoc($result1);
+        ?>
+        <div class="modal-header">
+          <h4 class="modal-title" id="editModalLabel">Tambah Buku</h4>
+            <a href="../buku.php"><button type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            </a>
+        </div>
+          <form action="../proses/proses_tambah_buku.php" method="post" enctype="multipart/form-data">
+            <div class="modal-body">
                     <!-- Isi formulir edit di sini -->
-                    <?php
-                    if ($result) {
-                      echo "<label for='perpustakaan'>Perpustakaan :</label>";
-                      echo "<select class='form-control' name='perpustakaan' required>";
+              <?php
+                if ($result) {
+                  echo "<label for='perpustakaan'>Perpustakaan :</label>";
+                  echo "<select class='form-control' name='perpustakaan' required>";
 
-                    while ($row = mysqli_fetch_assoc($result)) {
-                      $nama_perpustakaan = $row['nama_perpus'];
-                      $id_perpus = $row['id'];
-                      echo "<option value='$id_perpus'>$nama_perpustakaan</option>";
-                    }
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    $nama_perpustakaan = $row['nama_perpus'];
+                    $id_perpus = $row['id'];
+                    echo "<option value='$id_perpus'>$nama_perpustakaan</option>";
+                  }
 
-                    echo "</select>";
-                    } else {
+                  echo "</select>";
+                  } else {
                       echo "Gagal mengambil data";
                  }
               ?>
-        <div class="form-grup">
+          <div class="form-grup">
             <label for="cover">Cover :</label>
             <input type="file" name="cover" class="form-control" required>
-        </div>
-        <div class="form-grup">
+          </div>
+          <div class="form-grup">
             <label for="judul">Judul buku:</label>
             <input type="text" name="judul" class="form-control" required>
-        </div>
-        <div class="form-grup">
+          </div>
+          <div class="form-grup">
             <label for="penulis">Penulis :</label>
             <input type="text" name="penulis" class="form-control" required>
-        </div>
-        <div class="form-grup">
+          </div>
+          <div class="form-grup">
             <label for="penerbit">Penerbit :</label>
             <input type="text" name="penerbit" class="form-control" required>
-        </div>
-        <div class="form-grup">
+          </div>
+          <div class="form-grup">
             <label for="tahun_terbit">Tahun terbit :</label>
             <input type="date" name="tahun_terbit" class="form-control" required>
-        </div>
+          </div>
 
-        <label>Kategori :</label>
-        <select class='form-control' name='kategori' required>
-          <option>pilih kategori</option>
+          <label>Kategori :</label>
+            <select class='form-control' name='kategori' required>
+            <option>pilih kategori</option>
           <?php
              while ($rew = mysqli_fetch_assoc($result3)):
           ?>  
             <option value="<?= $rew['id'] ?>"><?= $rew['nama_kategori'];?></option>
 
           <?php endwhile ?>
-        </select>
+            </select>
         </div>
                  
-                      <div class="modal-footer">
-                        <a href="../buku.php"><button  class="btn btn-primary">Simpan Buku</button></a>
-                  </div>
-                  </form>
+        <div class="modal-footer">
+          <a href="../buku.php"><button  class="btn btn-primary">Simpan Buku</button></a>
+        </div>
+            </form>
                 <?php 
                     }  
                 ?>

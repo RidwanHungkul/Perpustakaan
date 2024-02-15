@@ -157,7 +157,7 @@ $result1 = mysqli_query($koneksi, $sql1);
                           </div>
                       </td>
                     <td><?= $row['total'] ?></td>
-                    <td> <?= number_format($row['average_rating'], 1) ?></td>
+                    <td><?= number_format($row['average_rating'], 1) ?></td>
                     <td>
                         <a href="modal/isi_ulasan.php?id=<?= $row['buku_id'] ?>" class="btn btn-primary btn-sm"><i class="fa-solid fa-eye"></i></a>
                         

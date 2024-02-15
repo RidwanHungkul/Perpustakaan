@@ -10,6 +10,26 @@ if(!$_SESSION["id"]){
 $sql = "SELECT * FROM kategori_buku";
 $result = mysqli_query($koneksi, $sql);
 
+// Pagination
+$limit = 5;
+$page = isset($_GET['page']) ?$_GET['page']: 1;
+$start = ($page - 1)* $limit;
+
+// Ambil kata kunci pencarian jika ada
+$searchKeyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+
+// Query untuk mengambil jumlah total buku
+$queryCount = "SELECT COUNT(*) AS total FROM kategori_buku";
+$resultCount = mysqli_query($koneksi, $queryCount);
+$rowCount = mysqli_fetch_assoc($resultCount);
+$totalBooks = $rowCount['total'];
+
+// Query untuk mengambil data buku berdasarkan halaman dan kata kunci pencarian
+$query = "SELECT * FROM `kategori_buku` LIMIT $start, $limit";
+$result = mysqli_query($koneksi, $query);
+
+$int = ($page - 1) * $limit;
+
 ?>
 
 
@@ -149,10 +169,44 @@ $result = mysqli_query($koneksi, $sql);
                     </td>
                 </tr>
             <?php endwhile; ?>
-        </tbody>
-    </table>
-  </div>
+          </tbody>
+        </table>
+      </div>
     </div>
+    <nav>
+      <ul class="pagination" style="position:relative;left:83%;">
+        <?php if ($page > 1): ?>
+            <li class="page-item">
+                <a class="page-link" href="?page=<?php echo ($page - 1); ?>&keyword=<?php echo $searchKeyword; ?>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        <?php endif; ?>
+
+        <?php
+        // Hitung jumlah halaman yang akan ditampilkan sesuai dengan batasan maksimum (3)
+        $maxPages = min($page + 2, ceil($totalBooks / $limit));
+        $minPages = max(1, $maxPages - 2);
+        ?>
+
+        <?php for ($i = $minPages; $i <= $maxPages; $i++): ?>
+            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                <a class="page-link" href="?page=<?php echo $i; ?>&keyword=<?php echo $searchKeyword; ?>"><?php echo $i; ?></a>
+            </li>
+        <?php endfor; ?>
+
+        <?php if ($maxPages < ceil($totalBooks / $limit)): ?>
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page=<?php echo ($maxPages + 1); ?>&keyword=<?php echo $searchKeyword; ?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        <?php endif; ?>
+      </ul>
+    </nav>
    </section>
   </div>
 </div>

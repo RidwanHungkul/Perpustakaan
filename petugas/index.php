@@ -7,7 +7,10 @@ if(!$_SESSION["id"]){
   header("Location:../login.php");
 }
 
-$sql = "SELECT peminjaman.*, user.nama_lengkap, buku.judul FROM `peminjaman` INNER JOIN user ON peminjaman.user=user.id INNER JOIN buku ON peminjaman.buku=buku.id";
+$sql = "SELECT peminjaman.*, user.nama_lengkap, buku.judul 
+        FROM `peminjaman` 
+        INNER JOIN user ON peminjaman.user=user.id 
+        INNER JOIN buku ON peminjaman.buku=buku.id";
 $result = mysqli_query($koneksi, $sql);
 
 $sql1 = "SELECT * FROM user";
@@ -79,7 +82,7 @@ $int = ($page - 1) * $limit;
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
-    <!-- Brand Logo -->
+    <!-- user -->
     <a href="#" class="brand-link" style="background-color:#0F1035; color:#fff;">
       <span class="brand-text font-weight-light">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
     </a>
@@ -172,61 +175,63 @@ $int = ($page - 1) * $limit;
       <div class="judul" style="height:30px; width:200px;">
         <h5>Data Peminjaman</h5>
       </div>
-    <div class="table-container d-flex" style="width:77%; position:absolute; top:220px; right:30px;">
-    <div class="container d-flex" style="position:relative; width:100%;">
-    <table class="table">
-        <?php 
-          echo "<thead><tr><th>No</th><th>Nama Peminjam</th><th>Buku</th><th>Tanggal Peminjaman</th><th>Tanggal Pengembalian</th><th>Status</th><th>Aksi</th></tr></thead>";
-            if($result->num_rows>0){$i=0;
-              while ($row = $result->fetch_assoc()){  $i++;
-                echo "<tr>";
-                  echo "<td>" . $i . "</td>";
-                  echo "<td>" . (isset($row["nama_lengkap"]) ? $row["nama_lengkap"] : "") . "</td>";
-                  echo "<td>" . (isset($row["judul"]) ? $row["judul"] : "") . "</td>";
-                  echo "<td>" . $row["tanggal_peminjaman"] . "</td>";
-                  echo "<td>" . $row["tanggal_pengembalian"] . "</td>";
-                  echo "<td>" . $row["status_peminjaman"] . "</td>";
-                  echo "<td>
+      <div class="table-container d-flex" style="width:77%; position:absolute; top:220px; right:30px;">
+        <div class="container d-flex" style="position:relative; width:100%;">
+          <table class="table">
+            <?php 
+              echo "<thead><tr><th>No</th><th>Nama Peminjam</th><th>Buku</th><th>Tanggal Peminjaman</th><th>Tanggal Pengembalian</th><th>Status</th><th>Aksi</th></tr></thead>";
+                if($result->num_rows>0){$i=0;
+                  while ($row = $result->fetch_assoc()){  $i++;
+                    echo "<tr>";
+                    echo "<td>" . $i . "</td>";
+                    echo "<td>" . (isset($row["nama_lengkap"]) ? $row["nama_lengkap"] : "") . "</td>";
+                    echo "<td>" . (isset($row["judul"]) ? $row["judul"] : "") . "</td>";
+                    echo "<td>" . $row["tanggal_peminjaman"] . "</td>";
+                    echo "<td>" . $row["tanggal_pengembalian"] . "</td>";
+                    echo "<td>" . $row["status_peminjaman"] . "</td>";
+                    echo "<td>
                           <a href='edit/edit_dashboard.php?id=" . $row['id'] . " 'class='btn btn-sm' style='background-color:#FE7A36; color:#fff'><i class='fa-solid fa-pen-to-square'></i></a>
                           <a target='_blank' href='../proses/download.php?id=" . $row['id'] . " 'class='btn btn-sm' style='background-color:#FF4646; color:#fff'><i class='fa-solid fa-file-arrow-down'></i></a>
                         </td>";
 
-                echo "</tr>";
-              }
-              echo "</tbody></table>";
-            }else{
-              echo "Data tidak ditemukan";
-            }
-        ?>
-    </table>
-  </div>
-</div>
-</div>
-<nav>
-<ul class="pagination" style="position:relative;left:83%;">
-    <?php if ($page > 1): ?>
-        <li class="page-item " >
-            <a class="page-link" href="?page=<?php echo ($page - 1); ?>&keyword=<?php echo $searchKeyword; ?>" aria-label="Previous">
+                    echo "</tr>";
+                  }
+                    echo "</tbody></table>";
+                }else{
+                  echo "Data tidak ditemukan";
+                }
+            ?>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <nav>
+      <ul class="pagination" style="position:relative;left:83%;">
+        <?php if ($page > 1): ?>
+            <li class="page-item " >
+              <a class="page-link" href="?page=<?php echo ($page - 1); ?>&keyword=<?php echo $searchKeyword; ?>" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-    <?php endif; ?>
+              </a>
+            </li>
+        <?php endif; ?>
 
-    <?php for ($i = 1; $i <= ceil($totalBooks / $limit); $i++): ?>
-        <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-            <a class="page-link" href="?page=<?php echo $i; ?>&keyword=<?php echo $searchKeyword; ?>"><?php echo $i; ?></a>
-        </li>
-    <?php endfor; ?>
+        <?php for ($i = 1; $i <= ceil($totalBooks / $limit); $i++): ?>
+            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+              <a class="page-link" href="?page=<?php echo $i; ?>&keyword=<?php echo $searchKeyword; ?>"><?php echo $i; ?></a>
+            </li>
+        <?php endfor; ?>
 
-    <?php if ($page < ceil($totalBooks / $limit)): ?>
-        <li class="page-item">
-            <a class="page-link" href="?page=<?php echo ($page + 1); ?>&keyword=<?php echo $searchKeyword; ?>" aria-label="Next">
+        <?php if ($page < ceil($totalBooks / $limit)): ?>
+            <li class="page-item">
+              <a class="page-link" href="?page=<?php echo ($page + 1); ?>&keyword=<?php echo $searchKeyword; ?>" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    <?php endif; ?>
-</ul>
-        </nav>
+              </a>
+            </li>
+        <?php endif; ?>
+      </ul>
+    </nav>
   </div>
 </div>
 

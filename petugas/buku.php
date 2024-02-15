@@ -11,6 +11,7 @@ $result = mysqli_query($koneksi, $sql);
 
 $sql1 = "SELECT * FROM kategori_buku";
 $result1 = mysqli_query($koneksi, $sql1);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,9 +42,6 @@ $result1 = mysqli_query($koneksi, $sql1);
 <div class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-light" style="background-color:#fff">
-    <!-- Left navbar links -->
-
-    <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
@@ -55,8 +53,8 @@ $result1 = mysqli_query($koneksi, $sql1);
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;position:fixed;">
-    <!-- Brand Logo -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;position:fixed;">
+    <!-- user -->
     <a href="#" class="brand-link" style="background-color:#0F1035; color:#fff;">
       <span class="brand-text font-weight-light">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
     </a>
@@ -100,13 +98,13 @@ $result1 = mysqli_query($koneksi, $sql1);
             </a>
           </div>            
         </div>
-      </div><!-- /.container-fluid -->
+      </div>
     </section>
     <!-- Main content -->
     <section class="content d-flex flex-col">
       <div class="container-fluid">
-    <table class="table" style="margin-top:30px;width:90%; position:relative;left:50px;">
-        <thead>
+        <table class="table" style="margin-top:30px;width:90%; position:relative;left:50px;">
+          <thead>
             <tr>
                 <th>No</th>
                 <th>Judul</th>
@@ -114,34 +112,32 @@ $result1 = mysqli_query($koneksi, $sql1);
                 <th>Tahun Terbit</th>
                 <th>Aksi</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <?php $i=0; while ($row = mysqli_fetch_assoc($result)) :  $i++; ?>
-                <tr>
-                    <td><?= $i ?></td>
-                        <td class='d-flex'>
-                          <img src="../asset/<?= $row['foto'] ?>" alt="Cover Buku" style="height:50px; width:50px;margin-right:10px;border-radius:3px"> 
-                          <div>
-                            <b><?= $row['judul'] ?></b><br>
-                            <?= $row['penulis'] ?>
-                            
-                          </div>
-                      </td>
-                        <td><?= $row['penerbit'] ?></td>
-                        <td><?= $row['tahun_terbit'] ?></td>
-                        <td>
-                            <a href="edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="delete/delete_buku.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
-                        </td>
+              <tr>
+                <td><?= $i ?></td>
+                <td class='d-flex'>
+                  <img src="../asset/<?= $row['foto'] ?>" alt="Cover Buku" style="height:50px; width:50px;margin-right:10px;border-radius:3px"> 
+                  <div>
+                  <b><?= $row['judul'] ?></b><br>
+                     <?= $row['penulis'] ?>
+                  </div>
+                </td>
+                <td><?= $row['penerbit'] ?></td>
+                <td><?= $row['tahun_terbit'] ?></td>
+                <td>
+                  <a href="edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                  <a href="delete/delete_buku.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
+                </td>
                 </tr>
             <?php endwhile; ?>
-        </tbody>
-    </table>
-  </div>
+          </tbody>
+        </table>
+      </div>
     </section>
   </div>
 </div>
-<!-- ./wrapper -->
 
 <!-- jQuery -->
 <script src="../plugins/jquery/jquery.min.js"></script>
