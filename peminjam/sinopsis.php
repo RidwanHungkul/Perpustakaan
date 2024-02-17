@@ -7,22 +7,8 @@ if(!$_SESSION["id"]){
 }
 $id = $_GET["id"];
 
-$query0 = "SELECT * FROM kategori_buku";
-$result1 = mysqli_query($koneksi, $query0); 
-
-$query = "SELECT buku.id, buku.judul, buku.penulis, buku.foto, buku.penerbit, buku.tahun_terbit, ulasan_buku.buku, ulasan_buku.rating,
-          AVG(ulasan_buku.rating) as rating_buku
-        FROM buku
-        LEFT JOIN ulasan_buku ON buku.id = ulasan_buku.buku
-        WHERE buku.id = '$id'
-        GROUP BY buku.id";
+$query = "SELECT * FROM buku WHERE id='$id'";
 $result = mysqli_query($koneksi, $query);
-
-$view = "SELECT user.nama_lengkap, ulasan_buku.ulasan, ulasan_buku.rating
-         FROM ulasan_buku
-         INNER JOIN user ON ulasan_buku.user = user.id
-         WHERE ulasan_buku.buku = '$id'";
-$review = mysqli_query($koneksi, $view);
 
 ?>
 <!DOCTYPE html>
@@ -97,11 +83,11 @@ $review = mysqli_query($koneksi, $view);
   <?php while ($row = mysqli_fetch_assoc($result)) : ?>
   <div class="row bg-body-tertiary shadow" style="width:70%;height:470px;margin-left:160px;margin-top:57px;">
   <div class="wrap p-3">
-    <a href="index.php" style="position:relative;left:275px"><button type="button" class="close" aria-label="Close">
+    <a href="index.php" style="position:relative;left:490px"><button type="button" class="close" aria-label="Close">
     <span aria-hidden="true">&times;</span>
     </button></a>
     <div class="foto">
-      <img src="../asset/<?=$row['foto']?>" alt="" style="width:250px;height:430px;object-fit:cover;border-radius:4px;">
+      <img src="../asset/<?=$row['foto']?>" alt="" style="position:relative;bottom:24px;width:250px;height:430px;object-fit:cover;border-radius:4px;">
     </div>
     <div class="desc d-flex" style="position: absolute; bottom:500px;left:700px">
       <h4><b><?= $row['judul'] ?></b></h4>
@@ -112,17 +98,14 @@ $review = mysqli_query($koneksi, $view);
     </div>
         <p style="position: absolute; bottom:435px;left:700px">Tahun terbit : <?= $row['tahun_terbit'] ?></p>
         <div class="ulasan">
-          <a href=""><h5 style="position: absolute;bottom:390px;left:700px;color:black; font-weight:400;">Ulasan :</h5></a>
-          <div class="wrap" style="overflow-y:scroll;width:460px;height:270px;position:relative;left:275px; bottom:270px;">
-          <?php while ($rew = mysqli_fetch_assoc($review)) : ?>
-          <div class="isi mb-2 p-1" style="width:440px;height:84px;background-color:#EEEDED; position:relative;border-radius:5px;">
-            <p class="mb-0 ml-2"><?= $rew ['nama_lengkap'] ?></p>
-            <p class="mb-0 ml-2">Rating : <?= $rew ['rating'] ?></p>
-            <p class="ml-2"><?= $rew ['ulasan'] ?></p>
-          </div>
-          <?php endwhile ?>
+          <h5 style="position:absolute;bottom:410px;left:700px;color:black; font-weight:400;">Sinopsis</h5>
         </div>
-        </div>
+    </div>
+    <div class="isi" style="width:465px; height: 270px; position:relative; top:150px;left:8px; text-indent:20px; overflow-y:scroll;">
+        <p><?= $row['sinopsis']; ?></p>
+    </div>
+    <div class="btn" style="position: relative; left:650px; bottom:68px">
+        <a href="isi_buku.php?id=<?= $row['id'] ?>">Lihat Ulasan >></a>
     </div>
   </div>
     <?php endwhile; ?>

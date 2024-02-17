@@ -6,11 +6,16 @@ if(!$_SESSION["id"]){
   header("Location:../../login.php");
 }
 $id = $_GET["id"];
-$sql = "SELECT * FROM buku";
+$sql = "SELECT buku.*, kategori_buku.nama_kategori 
+        FROM buku
+        INNER JOIN kategori_buku ON buku.kategori_id = kategori_buku.id";
 $result = mysqli_query($koneksi, $sql);
   
 
-$sql1 = "SELECT buku.*, kategori_buku.nama_kategori FROM buku INNER JOIN kategori_buku ON buku.kategori_id=kategori_buku.id WHERE buku.id='$id'";
+$sql1 = "SELECT buku.*, kategori_buku.nama_kategori 
+        FROM buku 
+        INNER JOIN kategori_buku ON buku.kategori_id=kategori_buku.id 
+        WHERE buku.id='$id'";
 $result1 = mysqli_query($koneksi, $sql1);
 
 $sql2 = "SELECT * FROM kategori_buku";
@@ -42,7 +47,7 @@ $result2 = mysqli_query($koneksi, $sql2);
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
+        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../../../logout.php">
           <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1;"></i>
         </a>
       </li>
@@ -54,7 +59,7 @@ $result2 = mysqli_query($koneksi, $sql2);
     <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- Brand Logo -->
     <a href="#" class="brand-link" style="background-color:#0F1035; color:#fff;">
-      <span class="brand-text font-weight-light">Hi Administrator !</span>
+      <span class="brand-text font-weight-light ml-4">Hi Administrator !</span>
     </a>
 
     <!-- Sidebar -->
@@ -118,13 +123,13 @@ $result2 = mysqli_query($koneksi, $sql2);
 
   <div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="false">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content" style="width:100%;height:550px;" >
               <?php if($result){
                 $ruw = mysqli_fetch_assoc($result1);
                  
               ?>
                 <div class="modal-header">
-                    <h4 class="modal-title" id="editModalLabel"><?=$ruw['judul'] ?></h4>
+                    <h3 class="modal-title" id="editModalLabel"><?=$ruw['judul'] ?></h3>
                     <a href="../buku.php"><button type="button" class="close" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button></a>
@@ -133,23 +138,21 @@ $result2 = mysqli_query($koneksi, $sql2);
                 <div class="foto" style="width: 135px; height:200px;">
                   <img src="../../asset/<?= $ruw['foto'] ?>" alt="" style="width:100%; height:100%">
                 </div>
-                  <div class="modal-body" style="width:250px;">
+                  <div class="modal-body" style="width:250px;margin-top:-19px;">
                     <!-- Isi formulir edit di sini -->
                     <div class="form_group">
-                      <p>Penulis : <?=$ruw['penulis'] ?></p>
+                      <p> <?=$ruw['penulis'] ?> | <?=$ruw['penerbit'] ?> | <?=$ruw['nama_kategori'] ?></p>
                     </div>
-                    <div class="form_group">
-                      <p>Penerbit : <?=$ruw['penerbit'] ?></p>
-                    </div>
-                    <div class="form_group">
+                    <div class="form_group" style="margin-top:-10px">
                       <p>Tahun Terbit : <?=$ruw['tahun_terbit'] ?></p>
                     </div>
-                    <div class="form_group">
-                      <p>Kategori : <?=$ruw['nama_kategori'] ?></p>
+                    <p>Sinopsis : </p>
+                    <div class="form_group" style="margin-top:10px; width:305px; height: 255px; text-indent:20px; overflow-y:scroll;">
+                      <p><?=$ruw['sinopsis'] ?></p>
                     </div>
+                 </div> 
                  </div>
-                 </div>
-                      <div class="modal-footer">
+                      <div class="modal-footer" style="margin-top:-15px;">
                         <a href="ulasan_buku.php?id=<?=$ruw['id'] ?>"><button  class="btn btn-primary">Ulas Buku</button></a>
                         <a href="../delete/delete_buku.php?id=<?=$ruw['id'] ?>"><button type="button" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus buku ini?')">Hapus</button></a>
                   </div>
@@ -168,7 +171,7 @@ $result2 = mysqli_query($koneksi, $sql2);
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 style="color:#161A30;">Semua Buku</h1>
-            <a href="input/input_buku.php">
+            <a href="../input/input_buku.php">
               <button type="button" class="btn btn-primary" style="margin-left:170%;margin-top:-30px;position:absolute;width:130px;">+ Tambah Buku</button>
             </a>
           </div>            
@@ -183,9 +186,9 @@ $result2 = mysqli_query($koneksi, $sql2);
             <tr>
                 <th>No</th>
                 <th>Judul</th>
-                <th>Penulis</th>
                 <th>Penerbit</th>
                 <th>Tahun Terbit</th>
+                <th>Kategori</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -201,13 +204,13 @@ $result2 = mysqli_query($koneksi, $sql2);
                             
                           </div>
                       </td>
-                    <td><?= $row['penulis'] ?></td>
-                    <td><?= $row['penerbit'] ?></td>
-                    <td><?= $row['tahun_terbit'] ?></td>
+                      <td><?= $row['penerbit'] ?></td>
+                      <td><?= $row['tahun_terbit'] ?></td>
+                      <td><?= $row['nama_kategori'] ?></td>
                     <td>
-                        <a href="edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="delete/delete_pengguna.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
-                        <a href="modal/isi_buku.php?id=<?=$row['id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff"><i class="fa-solid fa-eye"></i></a>
+                        <a href="../edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="../delete/delete_pengguna.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
+                        <a href="isi_buku.php?id=<?=$row['id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff"><i class="fa-solid fa-eye"></i></a>
                     </td>
                 </tr>
             <?php endwhile; ?>

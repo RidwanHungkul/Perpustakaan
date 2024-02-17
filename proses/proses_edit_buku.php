@@ -8,6 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $penulis = $_POST['penulis'];
     $penerbit = $_POST['penerbit'];
     $tahun_terbit = $_POST['tahun_terbit'];
+    $sinopsis = $_POST['sinopsis'];
     $kategori = $_POST['kategori'];
     $cover = $_FILES['cover'];
 
@@ -17,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fetchData = mysqli_fetch_assoc($result);
     $gambarLama = $fetchData['foto'];
 
-    if (!empty($judul) && !empty($penulis) && !empty($penerbit) && !empty($tahun_terbit) && !empty($kategori)) {
+    if (!empty($judul) && !empty($penulis) && !empty($penerbit) && !empty($tahun_terbit) && !empty($sinopsis) && !empty($kategori)) {
 
         // Jika ada file yang diunggah
         if (!empty($cover['name'])) {
@@ -33,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Mengupdate data buku
-        $updateSql = "UPDATE buku SET foto = '$fotoBaru', judul = '$judul', penulis = '$penulis', penerbit = '$penerbit', tahun_terbit = '$tahun_terbit', kategori_id = '$kategori' WHERE id = $user";
+        $updateSql = "UPDATE buku SET foto = '$fotoBaru', judul = '$judul', penulis = '$penulis', penerbit = '$penerbit', tahun_terbit = '$tahun_terbit', sinopsis = '$sinopsis', kategori_id = '$kategori' WHERE id = $user";
 
         if (mysqli_query($koneksi, $updateSql)) {
             echo "updated successfully!";

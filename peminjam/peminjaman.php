@@ -61,7 +61,7 @@ $result2 = mysqli_query($koneksi, $sql2);
             </a>
           </li>
           <li class="nav-item menu">
-            <a href="peminjaman.php" class="nav-link">
+            <a href="bookmark.php" class="nav-link">
               <i class="nav-icon fa-solid fa-bookmark"></i>
               <p>
                 Bookmark

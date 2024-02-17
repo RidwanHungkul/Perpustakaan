@@ -7,7 +7,9 @@ $result = mysqli_query($koneksi, $sql);
 $sql1 = "SELECT * FROM  kategori_buku ";
 $result1 = mysqli_query($koneksi, $sql1);
 
-$sql2 = "SELECT * FROM buku";
+$sql2 = "SELECT buku.*, kategori_buku.nama_kategori 
+         FROM buku 
+         INNER JOIN kategori_buku ON buku.kategori_id=kategori_buku.id";
 $result2 = mysqli_query($koneksi, $sql2);
 
 $sql3 = "SELECT * FROM  kategori_buku ";
@@ -41,7 +43,7 @@ $result3 = mysqli_query($koneksi, $sql3);
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
+        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../../../logout.php">
           <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1;"></i>
         </a>
       </li>
@@ -50,10 +52,10 @@ $result3 = mysqli_query($koneksi, $sql3);
 
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-      <span class="brand-text font-weight-light">Hi Administrator !</span>
+      <span class="brand-text font-weight-light ml-4">Hi Administrator !</span>
     </a>
 
     <!-- Sidebar -->
@@ -165,6 +167,11 @@ $result3 = mysqli_query($koneksi, $sql3);
             <label for="tahun_terbit">Tahun terbit :</label>
             <input type="date" name="tahun_terbit" class="form-control" required>
         </div>
+        <div class="form-grup">
+            <label for="sinopsis" class="mt-2" style="position:absolute;">Sinopsis :</label>
+            <textarea name="sinopsis" id="" cols="62" rows="5" class="mt-5"></textarea>
+        </div>
+
 
         <label>Kategori :</label>
         <select class='form-control' name='kategori' required>
@@ -210,9 +217,9 @@ $result3 = mysqli_query($koneksi, $sql3);
             <tr>
                 <th>No</th>
                 <th>Judul</th>
-                <th>Penulis</th>
                 <th>Penerbit</th>
                 <th>Tahun Terbit</th>
+                <th>Kategori</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -228,9 +235,9 @@ $result3 = mysqli_query($koneksi, $sql3);
                             
                           </div>
                       </td>
-                    <td><?= $row['penulis'] ?></td>
-                    <td><?= $row['penerbit'] ?></td>
-                    <td><?= $row['tahun_terbit'] ?></td>
+                      <td><?= $row['penerbit'] ?></td>
+                      <td><?= $row['tahun_terbit'] ?></td>
+                      <td><?= $row['nama_kategori'] ?></td>
                     <td>
                         <a href="edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a href="delete/delete_pengguna.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>

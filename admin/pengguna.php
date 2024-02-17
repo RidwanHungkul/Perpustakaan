@@ -74,7 +74,7 @@ $int = ($page - 1) * $limit;
   <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- Brand Logo -->
     <a href="#" class="brand-link" style="background-color:#0F1035; color:#fff;">
-      <span class="brand-text font-weight-light">Hi Administrator !</span>
+      <span class="brand-text font-weight-light ml-4">Hi Administrator !</span>
     </a>
 
     <!-- Sidebar -->
@@ -143,13 +143,13 @@ $int = ($page - 1) * $limit;
 
     <!-- Main content -->
    <section class="content">
-    <div class="content-wrape shadow p-3 mb-5 bg-body-tertiary" style="width:102%;padding:10px;background:#fff;border-radius:7px;margin-left:-10px">
+    <div class="content-wrape ml-2 shadow p-3 mb-5 bg-body-tertiary" style="width:98%;padding:10px;background:#fff;border-radius:7px;margin-left:-10px">
     <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
             <h2 style="color:#161A30;">Pengguna</h2>
             <a href="input/registrasi_pengguna.php">
-              <button type="button" class="btn btn-primary" style="margin-left:172%;margin-top:-30px;position:absolute;">Registrasi</button>
+              <button type="button" class="btn btn-primary" style="margin-left:188%;margin-top:-30px;position:absolute;"><i class="fa-solid fa-plus"></i></button>
             </a>
           </div>            
         </div>
@@ -160,7 +160,6 @@ $int = ($page - 1) * $limit;
             <tr>
                 <th>No</th>
                 <th>Nama Lengkap</th>
-                <th>Perpustakaan</th>
                 <th>Username</th>
                 <th>Role</th>
                 <th>Alamat</th>
@@ -173,9 +172,20 @@ $int = ($page - 1) * $limit;
                 <tr>
                     <td><?= $i ?></td>
                     <td><?= $row['nama_lengkap'] ?></td>
-                    <td><?= $row['nama_perpus'] ?></td>
                     <td><?= $row['username'] ?></td>
-                    <td><?= $row['role'] ?></td>
+                    <?php if($row['role'] === 'petugas') : ?>
+                    <td>
+                      <span style="color:blue; padding:5px 15px;border-radius:20px; background-color:#E9F9F9;">
+                        <b>Petugas</b>
+                      </span>
+                    </td>
+                    <?php elseif($row['role'] === 'peminjam') : ?>
+                      <td style="color: red;">
+                        <span style="color:red; padding:5px 15px;border-radius:20px; background-color:#FFE9C5;">
+                          <b>Peminjam</b>
+                        </span>
+                      </td>
+                    <?php endif; ?>
                     <td><?= $row['alamat'] ?></td>
                     <td><?= $row['email'] ?></td>
                     <td>
@@ -184,7 +194,7 @@ $int = ($page - 1) * $limit;
                     </td>
                 </tr>
             <?php endwhile; ?>
-        </tbody>
+         </tbody>
     </table>
   </div>
   </div>

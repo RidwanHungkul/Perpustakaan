@@ -9,6 +9,7 @@ if(!$_SESSION["id"]){
 
 $idbuku = $_GET["id"];
 
+
 $query1 = isset($idbuku) ? "SELECT buku.id as buku_id, buku.judul, buku.foto, buku.tahun_terbit, buku.penulis, buku.penerbit, ulasan_buku.buku, ulasan_buku.rating,
           AVG(ulasan_buku.rating) as rating_buku
         FROM buku
@@ -121,7 +122,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       <li>
         <form class="form-inline" action="search.php" method="GET">
                 <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Cari..." aria-label="Search" name="query">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
       </li>
       <li class="nav-item">
@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="background-color: #fff; color:#161A30;">
+  <div class="content-wrapper" style="background-color: #fff; color:#161A30;margin-top:20px; margin-left:268px">
 <div class="container" style="width:100%;">
     <div class="table-container d-flex" style="margin-left:20px">
     <div class="container d-flex flex-wrap" style="position:relative; width:100%;">
@@ -197,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                   </a>
                 <?php } ?>
             <a href="ulasan.php?id=<?= $rew['buku_id'] ?>" class="btn btn-sm btn-success">Ulas</a>
-            <a href="isi_buku.php?id=<?=$rew['buku_id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff">Detail</a>
+            <a href="sinopsis.php?id=<?=$rew['buku_id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff">Detail</a>
                         <?php
                             // Cek apakah buku sudah ada di koleksi pribadi user
                         $checkQuery = "SELECT * FROM koleksi_pribadi WHERE user = (SELECT id FROM user WHERE username = '$username') AND buku = {$rew['buku_id']}";

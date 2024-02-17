@@ -56,7 +56,7 @@ $result1 = mysqli_query($koneksi, $sql1);
   <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;position:fixed;">
     <!-- user -->
     <a href="#" class="brand-link" style="background-color:#0F1035; color:#fff;">
-      <span class="brand-text font-weight-light">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
+      <span class="brand-text font-weight-light ml-4">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
     </a>
 
     <!-- Sidebar -->

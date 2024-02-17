@@ -37,7 +37,7 @@ $result2 = mysqli_query($koneksi, $sql2);
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
+        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../../../logout.php">
           <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1;"></i>
         </a>
       </li>
@@ -46,10 +46,10 @@ $result2 = mysqli_query($koneksi, $sql2);
 
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-      <span class="brand-text font-weight-light">Hi Administrator !</span>
+      <span class="brand-text font-weight-light ml-4">Hi Administrator !</span>
     </a>
 
     <!-- Sidebar -->
@@ -113,9 +113,6 @@ $result2 = mysqli_query($koneksi, $sql2);
     <div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-              <?php if($result){
-                $riw = mysqli_fetch_assoc($result1);
-              ?>
                 <div class="modal-header">
                     <h4 class="modal-title" id="editModalLabel">Tambah Buku</h4>
                     <a href="../kategori.php"><button type="button" class="close" aria-label="Close">
@@ -133,9 +130,6 @@ $result2 = mysqli_query($koneksi, $sql2);
                         <a href="../buku.php"><button  class="btn btn-primary">Simpan Kategori</button></a>
                   </div>
                   </form>
-                <?php 
-                    }  
-                ?>
             </div>
         </div>
     </div>

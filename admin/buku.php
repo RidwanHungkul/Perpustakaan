@@ -56,7 +56,7 @@ $result = mysqli_query($koneksi, $sql);
     <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;position:fixed">
     <!-- User -->
     <a href="#" class="brand-link" style="background-color:#0F1035; color:#fff;">
-      <span class="brand-text font-weight-light">Hi Administrator !</span>
+      <span class="brand-text font-weight-light ml-4">Hi Administrator !</span>
     </a>
 
     <!-- Sidebar -->

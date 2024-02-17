@@ -40,7 +40,7 @@ $result3 = mysqli_query($koneksi, $sql3);
   <nav class="main-header navbar navbar-expand navbar-light" style="background-color:#fff">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
+        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../../logout.php">
           <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1;"></i>
         </a>
       </li>
@@ -49,10 +49,10 @@ $result3 = mysqli_query($koneksi, $sql3);
 
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- user -->
-    <a href="#" class="brand-link">
-      <span class="brand-text font-weight-light">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
+    <a href="#" class="brand-link" style="background-color:#0F1035;">
+      <span class="brand-text font-weight-light ml-4">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
     </a>
 
     <!-- Sidebar -->
@@ -132,6 +132,10 @@ $result3 = mysqli_query($koneksi, $sql3);
             <label for="tahun_terbit">Tahun terbit :</label>
             <input type="date" name="tahun_terbit" class="form-control" required>
           </div>
+          <div class="form-grup">
+            <label for="sinopsis" class="mt-2" style="position:absolute;">Sinopsis :</label>
+            <textarea name="sinopsis" id="" cols="62" rows="5" class="mt-5"></textarea>
+        </div>  
 
           <label>Kategori :</label>
             <select class='form-control' name='kategori' required>
@@ -163,7 +167,7 @@ $result3 = mysqli_query($koneksi, $sql3);
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 style="color:#161A30;">Semua Buku</h1>
-            <a href="input/input_buku.php">
+            <a href="input_buku.php">
               <button type="button" class="btn btn-primary" style="margin-left:170%;margin-top:-30px;position:absolute;width:148px;">+ Tambah Buku</button>
             </a>
           </div>            
@@ -198,10 +202,9 @@ $result3 = mysqli_query($koneksi, $sql3);
                         <td><?= $row['penerbit'] ?></td>
                         <td><?= $row['tahun_terbit'] ?></td>
                         <td>
-                            <a href="edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="delete/delete_buku.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
-                            <a href="modal/isi_buku.php?id=<?=$row['id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff"><i class="fa-solid fa-eye"></i></a>
-                        </td>
+                            <a href="../edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="../delete/delete_buku.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
+                          </td>
                 </tr>
             <?php endwhile; ?>
         </tbody>

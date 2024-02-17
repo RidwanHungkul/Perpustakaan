@@ -36,7 +36,7 @@ $result1 = mysqli_query($koneksi, $sql1);
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
+        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../../../logout.php">
           <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1;"></i>
         </a>
       </li>
@@ -45,10 +45,10 @@ $result1 = mysqli_query($koneksi, $sql1);
 
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-      <span class="brand-text font-weight-light">Hi Administrator !</span>
+    <a href="#" class="brand-link" style="background-color:#0F1035;">
+      <span class="brand-text font-weight-light ml-4">Hi Administrator !</span>
     </a>
 
     <!-- Sidebar -->
@@ -114,7 +114,7 @@ $result1 = mysqli_query($koneksi, $sql1);
             <div class="modal-content">
               <?php if($result){
                 $riw = mysqli_fetch_assoc($result);
-              ?>
+              ?> 
                 <div class="modal-header">
                     <h4 class="modal-title" id="editModalLabel">Edit Kategori</h4>
                     <a href="../kategori.php"><button type="button" class="close" aria-label="Close">
@@ -172,8 +172,8 @@ $result1 = mysqli_query($koneksi, $sql1);
                     <td><?= $i ?></td>
                     <td><?= $row['nama_kategori'] ?></td>
                     <td>
-                        <a href="edit/edit_kategori.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="delete/delete_kategori.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
+                        <a href="../edit/edit_kategori.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="../delete/delete_kategori.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
             <?php endwhile; ?>

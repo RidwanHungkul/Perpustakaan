@@ -42,7 +42,7 @@ $result2 = mysqli_query($koneksi, $sql2);
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
+        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../../logout.php">
           <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1;"></i>
         </a>
       </li>
@@ -54,7 +54,7 @@ $result2 = mysqli_query($koneksi, $sql2);
     <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- Brand Logo -->
     <a href="#" class="brand-link" style="background-color:#0F1035; color:#fff;">
-      <span class="brand-text font-weight-light">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
+      <span class="brand-text font-weight-light ml-4">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
     </a>
 
     <!-- Sidebar -->
@@ -119,6 +119,10 @@ $result2 = mysqli_query($koneksi, $sql2);
                 <label for="tahun_terbit">Tahun terbit :</label>
                 <input type="number" class="form-control" name="tahun_terbit" value="<?= $ruw['tahun_terbit']?>">
             </div>
+            <div class="form-grup">
+              <label for="sinopsis" class="mt-2" style="position:absolute;">Sinopsis :</label>
+              <textarea name="sinopsis" id="" cols="62" rows="5" class="mt-5"><?= $ruw['sinopsis']?></textarea>
+            </div>
             <div class="form-group">
            <label>Kategori :</label>
         <select class='form-control' name='kategori' required>
@@ -151,7 +155,7 @@ $result2 = mysqli_query($koneksi, $sql2);
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 style="color:#161A30;">Semua Buku</h1>
-            <a href="input/input_buku.php">
+            <a href="../input/input_buku.php">
               <button type="button" class="btn btn-primary" style="margin-left:170%;margin-top:-30px;position:absolute;width: 148px;">+ Tambah Buku</button>
             </a>
           </div>            
@@ -186,8 +190,8 @@ $result2 = mysqli_query($koneksi, $sql2);
                     <td><?= $row['penerbit'] ?></td>
                     <td><?= $row['tahun_terbit'] ?></td>
                     <td>
-                        <a href="edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="delete/delete_pengguna.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
+                        <a href="edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="../delete/delete_pengguna.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
             <?php endwhile; ?>

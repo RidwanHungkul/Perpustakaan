@@ -26,10 +26,10 @@ $result = mysqli_query($koneksi, $sql);
     <body class="hold-transition  sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-      <span class="brand-text font-weight-light">Hi Administrator !</span>
+    <a href="#" class="brand-link" style="background-color:#0F1035;">
+      <span class="brand-text font-weight-light ml-4">Hi Administrator !</span>
     </a>
     <!-- Sidebar -->
     <div class="sidebar">

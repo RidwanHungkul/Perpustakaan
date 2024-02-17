@@ -57,7 +57,7 @@ $result1 = mysqli_query($koneksi, $sql1);
   <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- Brand Logo -->
     <a href="#" class="brand-link" style="background-color:#0F1035; color:#fff;">
-      <span class="brand-text font-weight-light">Hi Administrator !</span>
+      <span class="brand-text font-weight-light ml-4">Hi Administrator !</span>
     </a>
 
     <!-- Sidebar -->
@@ -159,7 +159,7 @@ $result1 = mysqli_query($koneksi, $sql1);
                     <td><?= $row['total'] ?></td>
                     <td><?= number_format($row['average_rating'], 1) ?></td>
                     <td>
-                        <a href="modal/isi_ulasan.php?id=<?= $row['buku_id'] ?>" class="btn btn-primary btn-sm"><i class="fa-solid fa-eye"></i></a>
+                        <a href="modal/isi_ulasan.php?id=<?= $row['buku_id'] ?>" class="btn btn-primary btn-sm" style="margin-top:15px;"><i class="fa-solid fa-eye"></i></a>
                         
                     </td>
                 </tr>
