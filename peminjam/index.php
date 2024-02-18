@@ -112,6 +112,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       transform:scale(0.74);
 
     }
+    .search{
+      width: 800px;
+      margin-right: 120px;
+    }
+    .search-form{
+      width: 100%;
+      height: 40px;
+      border-radius: 50px;
+      position: relative;
+      top:8px;
+      padding: 20px;
+      border: 1px solid grey;
+    }
 </style>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style="overflow-x:hidden;">
 <div class="wrapper">
@@ -119,14 +132,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   <nav class="main-header navbar navbar-expand" style="background-color:#fff">
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <li>
+      <li class="search">
         <form class="form-inline" action="search.php" method="GET">
-                <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Cari..." aria-label="Search" name="query">
+            <input id="searchInput" class="search-form" type="search" placeholder="Cari buku..." aria-label="Search" name="query">
         </form>
       </li>
       <li class="nav-item">
         <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
-          <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1;"></i>
+          <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1; position:relative; top: 12px;"></i>
         </a>
       </li>
     </ul>
@@ -136,8 +149,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link" style="background-color:#0F1035; color:#fff;">
-      <span class="brand-text font-weight-light">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
+    <a href="#" class="brand-link" style="background-color:#0F1035; color:#fff; border-bottom:#0F1035; ">
+      <span class="brand-text font-weight-light ml-4">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
     </a>
 
     <!-- Sidebar -->
@@ -167,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="background-color: #fff; color:#161A30;margin-top:20px; margin-left:268px">
+  <div class="content-wrapper" style="background-color: #fff; color:#161A30;margin-top:30px; margin-left:268px">
 <div class="container" style="width:100%;">
     <div class="table-container d-flex" style="margin-left:20px">
     <div class="container d-flex flex-wrap" style="position:relative; width:100%;">
@@ -176,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         <div class="foto">
             <img src="../asset/<?= $rew['foto'] ?>" alt="" style="">
         </div>
-        <div class="descrip mt-3 p-2">
+        <div class="descrip mt-3 p-3">
             <b><h4><?= $rew['judul'] ?></h4></b>
             <p><?= $rew['penulis'] ?></p>
             <p><?= $rew['penerbit'] ?></p>

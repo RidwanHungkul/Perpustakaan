@@ -159,7 +159,7 @@ $result2 = mysqli_query($koneksi, $sql2);
         ?>
         <div class="form-grup">
             <label for="tanggal_peminjaman">Tanggal peminjaman :</label>
-            <input type="date" name="tanggal_peminjaman" class="form-control">
+            <input type="date" name="tanggal_peminjaman" class="form-control" required>
         </div>
         <div class="form-grup">
             <label for="status">Status :</label>
