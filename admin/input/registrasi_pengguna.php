@@ -28,7 +28,7 @@ $result = mysqli_query($koneksi, $sql);
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
+    <a href="#" class="brand-link" style="background-color:#0F1035;">
       <span class="brand-text font-weight-light ml-4">Hi Administrator !</span>
     </a>
 
@@ -105,8 +105,8 @@ $result = mysqli_query($koneksi, $sql);
       <div class="form-grup" id="perpustakaan-container">
         <?php
             if ($result) {
-                echo "<label for='perpustakaan'>Perpustakaan :</label>";
-                echo "<select class='form-control' name='perpustakaan' required>";
+                echo "<label for='perpustakaan' style='display:none;'>Perpustakaan :</label>";
+                echo "<select class='form-control' style='display:none;' name='perpustakaan' required>";
 
                 while ($row = mysqli_fetch_assoc($result)) {
                     $nama_perpustakaan = $row['nama_perpus'];

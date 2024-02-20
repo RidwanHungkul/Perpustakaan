@@ -68,7 +68,7 @@ $result = mysqli_query($koneksi, $sql);
     <section class="content">
       <div class="content-wraper shadow p-3 mb-5 bg-body-tertiary" style="width:50%;margin-left:25%;padding:10px;background:#fff;border-radius:7px;">
        <div class="container-fluid">
-        <h2 style="color:#161A30; text-align:center;">Dashboard</h2>
+        <h2 style="color:#161A30; text-align:center;">Pengembalian</h2>
          <form action="../proses/proses_edit_dashboard.php?id=<?= $data['id'] ?>" method="post">
             <div class="form-group">
                 <label for="nama_lengkap">Nama peminjam :</label>
@@ -89,7 +89,7 @@ $result = mysqli_query($koneksi, $sql);
             <div class="form-group">
           <label for="status">Status :</label>
           <select class="form-control" name="status_peminjaman" required>
-            <option value=""></option>
+            <option value=""><?= $data['status_peminjaman'] ?></option>
             <option value="Dipinjam">Dipinjam</option>
             <option value="Dikembalikan">Dikembalikan</option>
           </select>

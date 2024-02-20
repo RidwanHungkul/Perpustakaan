@@ -35,6 +35,12 @@ $result = mysqli_query($koneksi, $sql);
       background-color: #525CEB;
       color:#FFf;
     }
+    .search-form:focus{
+    outline: 2px solid #40A2E3;
+  }
+    tr{
+      border-bottom: 1px solid #eeeeee;
+    }
   </style>
 
 </head>
@@ -126,41 +132,51 @@ $result = mysqli_query($koneksi, $sql);
           <div class="col-sm-6">
             <h1 style="color:#161A30;">Semua Buku</h1>
             <a href="input/input_buku.php">
-              <button type="button" class="btn btn-primary" style="margin-left:170%;margin-top:-30px;position:absolute;width:140px;">+ Tambah Buku</button>
+              <button type="button" class="btn btn-primary" style="margin-left:186%;margin-top:-30px;position:absolute;"><i class="fa-solid fa-plus"></i></button>
             </a>
           </div>            
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- Main content -->
-    <section class="content d-flex flex-col">
-      <div class="container-fluid">
-        <table class="table" style="margin-top:30px;width:90%; position:relative;left:50px;">
+        <div class="search" style="position: relative;margin-left:680px;">
+         <form class="form-inline" action="" method="GET">
+             <input id="searchInput" class="search-form " type="search" placeholder="Search" aria-label="Search" 
+                    name="query" style="width:60%; margin-top:-38px; padding:5px 10px; border-radius: 10px; margin-left:90px; border:2px solid #40A2E3">
+         </form>
+     </div>
+      </div>
+  </section>
+    <div class="container-fluid">
+        <table class="table" style="margin-top:30px;width:961px; position:relative;left:58px;">
             <thead>
                 <tr>
-                    <th>No</th>
-                    <th>Judul</th>
-                    <th>Penerbit</th>
-                    <th>Tahun Terbit</th>
-                    <th>Kategori</th>
+                    <th style="width: 47px;">No</th>
+                    <th style="width: 320px;">Judul</th>
+                    <th style="width: 256px;">Penerbit</th>
+                    <th style="width: 115px;">Tahun Terbit</th>
+                    <th style="width: 115px;">Kategori</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
+        </table>
+    </div>
+    <!-- Main content -->
+    <section class="content d-flex flex-col">
+      <div class="container-fluid" style="overflow-y:scroll; height: 390px; ">
+        <table class="table" style="margin-top:-13px;width:92%; position:relative;left:50px;">
             <tbody>
                 <?php $i=0; while ($row = mysqli_fetch_assoc($result)) :  $i++; ?>
-                    <tr>
-                        <td><?= $i ?></td>
-                        <td class='d-flex'>
+                    <tr class="searchable">
+                        <td style="width: 45px;"><?= $i ?></td>
+                        <td class="d-flex" style="width:321px;">
                           <img src="../asset/<?= $row['foto'] ?>" alt="Cover Buku" style="height:50px; width:50px;margin-right:10px;border-radius:3px"> 
                           <div>
                             <b><?= $row['judul'] ?></b><br>
                             <?= $row['penulis'] ?>
                             
                           </div>
-                      </td>
-                        <td><?= $row['penerbit'] ?></td>
-                        <td><?= $row['tahun_terbit'] ?></td>
-                        <td><?= $row['nama_kategori'] ?></td>
+                        </td>
+                        <td style="width: 257px;"><?= $row['penerbit'] ?></td>
+                        <td style="width: 115px;"><?= $row['tahun_terbit'] ?></td>
+                        <td style="width: 115px;"><?= $row['nama_kategori'] ?></td>
                         <td>
                             <a href="edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
                             <a href="delete/delete_buku.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
@@ -176,13 +192,59 @@ $result = mysqli_query($koneksi, $sql);
 </div>
 <!-- ./wrapper -->
 
+<!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
-<script src="../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../dashboard/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="../dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="../dashboard/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
+<script src="../dashboard/dist/js/adminlte.js"></script>
+
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="../dashboard/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="../dashboard/plugins/raphael/raphael.min.js"></script>
+<script src="../dashboard/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="../dashboard/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+<!-- ChartJS -->
+<script src="../dashboard/plugins/chart.js/Chart.min.js"></script>
+
 <!-- AdminLTE for demo purposes -->
-<script src="../dist/js/demo.js"></script>
+<script src="../dashboard/dist/js/demo.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="../dashboard/dist/js/pages/dashboard2.js"></script>
+<script>
+  $(document).ready(function(){
+        // Add an input event listener to the search input
+        $("#searchInput").on("input", function() {
+            let searchTerm = $(this).val().toLowerCase(); // Get the value of the input and convert to lowercase
+
+            // Keep track if any results are found
+            let resultsFound = false;
+
+            // Loop through each searchable card
+            $(".searchable").each(function() {
+                let cardText = $(this).text().toLowerCase(); // Get the text content of the card and convert to lowercase
+
+                // Check if the card text contains the search term
+                if (cardText.includes(searchTerm)) {
+                    $(this).show(); // If yes, show the card
+                    resultsFound = true; // Mark that results are found
+                } else {
+                    $(this).hide(); // If no, hide the card
+                }
+            });
+
+            // Show/hide the no results message based on resultsFound
+            if (resultsFound) {
+                $("#noResultsMessage").hide();
+            } else {
+                $("#noResultsMessage").show();
+            }
+      });
+   });
+</script>
 </body>
 </html>

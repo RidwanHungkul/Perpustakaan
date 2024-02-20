@@ -114,13 +114,19 @@ $review = mysqli_query($koneksi, $view);
         <div class="ulasan">
           <a href=""><h5 style="position: absolute;bottom:390px;left:700px;color:black; font-weight:400;">Ulasan :</h5></a>
           <div class="wrap" style="overflow-y:scroll;width:460px;height:270px;position:relative;left:275px; bottom:270px;">
-          <?php while ($rew = mysqli_fetch_assoc($review)) : ?>
-          <div class="isi mb-2 p-1" style="width:440px;height:84px;background-color:#EEEDED; position:relative;border-radius:5px;">
-            <p class="mb-0 ml-2"><?= $rew ['nama_lengkap'] ?></p>
-            <p class="mb-0 ml-2">Rating : <?= $rew ['rating'] ?></p>
-            <p class="ml-2"><?= $rew ['ulasan'] ?></p>
-          </div>
-          <?php endwhile ?>
+          <?php if(mysqli_num_rows($review) > 0) : ?>
+            <?php while ($rew = mysqli_fetch_assoc($review)) : ?>
+              <div class="isi mb-2 p-1" style="width:440px;height:84px;background-color:#EEEDED; position:relative;border-radius:5px;">
+                <p class="mb-0 ml-2"><?= $rew ['nama_lengkap'] ?></p>
+                <p class="mb-0 ml-2">Rating : <?= $rew ['rating'] ?></p>
+                <p class="ml-2"><?= $rew ['ulasan'] ?></p>
+              </div>
+            <?php endwhile ?>
+          <?php else : ?>
+            <div class="isi mb-2 p-1" style="width:440px;height:84px; position:relative;border-radius:5px;">
+              <p class="ml-2">Belum ada ulasan</p>
+            </div>
+          <?php endif ?>
         </div>
         </div>
     </div>

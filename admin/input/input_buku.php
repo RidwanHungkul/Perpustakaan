@@ -54,7 +54,7 @@ $result3 = mysqli_query($koneksi, $sql3);
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
+    <a href="#" class="brand-link" style="background-color:#0F1035;">
       <span class="brand-text font-weight-light ml-4">Hi Administrator !</span>
     </a>
 
@@ -133,8 +133,8 @@ $result3 = mysqli_query($koneksi, $sql3);
                     <!-- Isi formulir edit di sini -->
                     <?php
                     if ($result) {
-                      echo "<label for='perpustakaan'>Perpustakaan :</label>";
-                      echo "<select class='form-control' name='perpustakaan' required>";
+                      echo "<label for='perpustakaan' style='display:none'>Perpustakaan :</label>";
+                      echo "<select class='form-control' style='display:none' name='perpustakaan' required>";
 
                     while ($row = mysqli_fetch_assoc($result)) {
                       $nama_perpustakaan = $row['nama_perpus'];
@@ -149,7 +149,7 @@ $result3 = mysqli_query($koneksi, $sql3);
               ?>
           <div class="form-grup">
             <label for="cover">Upload Cover:</label>
-            <input type="file" name="cover" class="form-control" required style="height:45px;">
+            <input type="file" name="cover" class="form-control" required style="height:auto;">
         </div>
           <div class="form-grup">
             <label for="judul">Judul buku:</label>
@@ -195,59 +195,69 @@ $result3 = mysqli_query($koneksi, $sql3);
         </div>
     </div>
 
-    <div class="content-wrapper " style="height:91.6vh; background-color: #EEEEEE; color:#161A30;">
+    <div class="content-wrapper " style="height:91.6vh; background-color: #fff; color:#161A30;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid ">
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 style="color:#161A30;">Semua Buku</h1>
-            <a href="input/input_buku.php">
-              <button type="button" class="btn btn-primary" style="margin-left:170%;margin-top:-30px;position:absolute;width:140px;">+ Tambah Buku</button>
+            <a href="input_buku.php">
+              <button type="button" class="btn btn-primary" style="margin-left:186%;margin-top:-30px;position:absolute;"><i class="fa-solid fa-plus"></i></button>
             </a>
           </div>            
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- Content Header (Page header) -->
-    <section class="content d-flex flex-col">
-      <div class="container-fluid">
-    <table class="table" style="margin-top:30px;width:90%; position:relative;left:50px;">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Judul</th>
-                <th>Penerbit</th>
-                <th>Tahun Terbit</th>
-                <th>Kategori</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php $i=0; while ($row = mysqli_fetch_assoc($result2)) :  $i++; ?>
+        <div class="search" style="position: relative;margin-left:680px;">
+         <form class="form-inline" action="" method="GET">
+             <input id="searchInput" class="search-form " type="search" placeholder="Search" aria-label="Search" 
+                    name="query" style="width:60%; margin-top:-38px; padding:5px 10px; border-radius: 10px; margin-left:90px; border:2px solid #40A2E3">
+         </form>
+     </div>
+      </div>
+  </section>
+    <div class="container-fluid">
+        <table class="table" style="margin-top:30px;width:961px; position:relative;left:58px;">
+            <thead>
                 <tr>
-                    <td><?= $i ?></td>
-                        <td class='d-flex'>
+                    <th style="width: 47px;">No</th>
+                    <th style="width: 320px;">Judul</th>
+                    <th style="width: 256px;">Penerbit</th>
+                    <th style="width: 115px;">Tahun Terbit</th>
+                    <th style="width: 115px;">Kategori</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <!-- Main content -->
+    <section class="content d-flex flex-col">
+      <div class="container-fluid" style="overflow-y:scroll; height: 390px; ">
+        <table class="table" style="margin-top:-13px;width:92%; position:relative;left:50px;">
+            <tbody>
+                <?php $i=0; while ($row = mysqli_fetch_assoc($result2)) :  $i++; ?>
+                    <tr class="searchable">
+                        <td style="width: 45px;"><?= $i ?></td>
+                        <td class="d-flex" style="width:321px;">
                           <img src="../../asset/<?= $row['foto'] ?>" alt="Cover Buku" style="height:50px; width:50px;margin-right:10px;border-radius:3px"> 
                           <div>
                             <b><?= $row['judul'] ?></b><br>
                             <?= $row['penulis'] ?>
                             
                           </div>
-                      </td>
-                      <td><?= $row['penerbit'] ?></td>
-                      <td><?= $row['tahun_terbit'] ?></td>
-                      <td><?= $row['nama_kategori'] ?></td>
-                    <td>
-                        <a href="edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="delete/delete_pengguna.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
-                        <a href="modal/isi_buku.php?id=<?=$row['id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff"><i class="fa-solid fa-eye"></i></a>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
-  </div>
+                        </td>
+                        <td style="width: 257px;"><?= $row['penerbit'] ?></td>
+                        <td style="width: 115px;"><?= $row['tahun_terbit'] ?></td>
+                        <td style="width: 115px;"><?= $row['nama_kategori'] ?></td>
+                        <td>
+                            <a href="../edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="../delete/delete_buku.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
+                            <a href="../modal/isi_buku.php?id=<?=$row['id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff"><i class="fa-solid fa-eye"></i></a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+      </div>
     </section>
   </div>
 </div>

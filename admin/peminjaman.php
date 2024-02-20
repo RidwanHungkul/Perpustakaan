@@ -114,14 +114,14 @@ $result2 = mysqli_query($koneksi, $sql2);
 
     <!-- Main content -->
    <section class="content mt-5">
-    <div class="content-wraper shadow p-3 mb-5 bg-body-tertiary" style="width:50%;margin-left:25%;padding:10px;background:#fff;border-radius:7px;">
+    <div class="content-wraper shadow p-3 mb-5 bg-body-tertiary" style="width:40%;margin-left:30%;padding:10px;background:#fff;border-radius:7px;">
   <div class="container-fluid">
     <h2 style="color:#161A30; text-align:center;">Peminjaman</h2>
     <form action="../proses/proses_input_peminjaman.php" method="post">
       <?php
             if ($result) {
-                echo "<label for='perpustakaan'>Perpustakaan :</label>";
-                echo "<select class='form-control' name='perpustakaan' required>";
+                echo "<label for='perpustakaan' style='display:none;'>Perpustakaan :</label>";
+                echo "<select class='form-control' style='display:none;' name='perpustakaan' required>";
 
                 while ($row = mysqli_fetch_assoc($result)) {
                     $nama_perpustakaan = $row['nama_perpus'];

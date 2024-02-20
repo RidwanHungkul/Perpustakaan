@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 15 Feb 2024 pada 01.25
+-- Waktu pembuatan: 19 Feb 2024 pada 02.17
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -34,6 +34,7 @@ CREATE TABLE `buku` (
   `judul` varchar(255) NOT NULL,
   `penulis` varchar(255) NOT NULL,
   `penerbit` varchar(255) NOT NULL,
+  `sinopsis` text NOT NULL,
   `tahun_terbit` int(11) NOT NULL,
   `kategori_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -43,12 +44,14 @@ CREATE TABLE `buku` (
 -- Dumping data untuk tabel `buku`
 --
 
-INSERT INTO `buku` (`id`, `perpus_id`, `foto`, `judul`, `penulis`, `penerbit`, `tahun_terbit`, `kategori_id`, `created_at`) VALUES
-(2, 1, 'Milea_Suara_dari_Dilan.jpg', 'Milea Suara dari Dilan', 'Pidi Baiq', 'Angkringan Milenial', 2024, 8, '2024-02-12 03:58:49'),
-(13, 1, 'si_kancil.jpg', 'Petualangan si Kancil', 'Iweng Baik', 'PT Banjarangsana', 2021, 8, '2024-02-12 03:58:49'),
-(17, 1, 'Pengabdi-Setan.jpg', 'Pengabdi Setan', 'Sulaeman Ibrahim', 'PT Alba', 2024, 15, '2024-02-12 03:58:49'),
-(45, 1, 'dilan.png', 'Dilan & Milea 1990', 'Pidi Baiq', 'Angkringan Milenial', 2024, 8, '2024-02-12 01:46:51'),
-(46, 1, 'dilan1991.jpg', 'Dilan & Milea 1991', 'Pidi Baiq', 'PT Banjarangsana', 2024, 8, '2024-02-12 03:58:49');
+INSERT INTO `buku` (`id`, `perpus_id`, `foto`, `judul`, `penulis`, `penerbit`, `sinopsis`, `tahun_terbit`, `kategori_id`, `created_at`) VALUES
+(2, 1, 'Milea_Suara_dari_Dilan.jpg', 'Milea Suara dari Dilan', 'Pidi Baiq', 'Angkringan Milenial Doang', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 2024, 15, '2024-02-17 13:40:44'),
+(13, 1, 'sikancil.jpg', 'Petualangan si Kancil', 'Iweng Baik', 'PT Banjarangsana', 'Lorem', 2021, 8, '2024-02-16 06:28:24'),
+(17, 1, 'Pengabdi-Setan.jpg', 'Pengabdi Setan', 'Sulaeman Ibrahim', 'PT Alba', 'Lorem', 2024, 12, '2024-02-16 06:28:24'),
+(45, 1, 'dilan.png', 'Dilan & Milea 1990', 'Pidi Baiq', 'Angkringan Milenial', 'Dilan adalah seorang siswa SMA di Bandung, sedangkan Milea adalah siswa baru, pindahan dari Jakarta. Sejak kali pertama mengetahui Milea, Dilan tertarik lalu mendekatinya. Cara Dilan untuk mendekati Milea sangatlah unik. Cara Dilan untuk mendekati Milea ini lama-lama berbalas. Meskipun Milea saat itu memiliki pacar di Jakarta bernama Beni. Awalnya Milea ragu untuk membalas perasaan pada Dilan karena dia telah memiliki Beni. Namun, kejadian saat Milea ke Jakarta membuatnya mengakhiri hubungan dengan Beni. Milea datang ke Jakarta untuk mendukung temannya yang ikut lomba cerdas cermat. Saat itu Milea janjian dengan Beni untuk bertemu, tetapi Beni tak kunjung datang. Akhirnya Milea makan dengan Nandan dan Wati. Beni datang memarahi Milea karena tak terima Milea makan dengan laki-laki lain. Pada saat inilah Milea resmi mengakhiri hubungan dengan Beni. Dilan dan Milea mengakui saling suka. Hubungan keduanya semakin serius. Bahkan Dilan beberapa kali mengajak Milea ke rumahnya untuk dikenalkan pada keluarga terutama bundanya. Begitu juga dengan Milea, yang mengajak Dilan untuk berkunjung ke rumah Milea. Bagaimana kisah selanjutnya?', 2024, 15, '2024-02-16 15:22:57'),
+(46, 1, 'dilan1991.jpg', 'Dilan & Milea 1991', 'Pidi Baiq', 'PT Banjarangsana', 'Lorem', 2024, 15, '2024-02-16 06:28:24'),
+(59, 1, 'matematika.jpg', 'Matematika', 'Ibu Neny Matematika', 'PT. Buku Indonesia', 'Lorem', 2017, 7, '2024-02-16 06:28:24'),
+(60, 1, 'bhsIndonesia.jpg', 'Bahasa Indonesia', 'Ibu Hindun S.Pd', 'PT. Buku Indonesia', 'Lorem', 2017, 7, '2024-02-16 06:28:24');
 
 -- --------------------------------------------------------
 
@@ -67,11 +70,12 @@ CREATE TABLE `kategori_buku` (
 --
 
 INSERT INTO `kategori_buku` (`id`, `nama_kategori`, `created_at`) VALUES
-(6, 'Kesehatan1', '2024-02-13 06:23:02'),
+(6, 'Kesehatan', '2024-02-17 10:32:56'),
 (7, 'Pendidikan', '2024-02-12 03:46:35'),
 (8, 'Komik', '2024-01-26 00:55:12'),
 (12, 'Horor', '2024-02-12 03:46:24'),
-(15, 'Novel', '2024-02-12 03:46:14');
+(15, 'Novel', '2024-02-12 03:46:14'),
+(18, 'Politik', '2024-02-17 04:31:36');
 
 -- --------------------------------------------------------
 
@@ -95,10 +99,9 @@ INSERT INTO `koleksi_pribadi` (`id`, `user`, `buku`, `created_at`) VALUES
 (10, 16, 13, '2024-02-11 12:49:57'),
 (11, 1, 2, '2024-02-11 13:32:59'),
 (12, 1, 13, '2024-02-11 13:33:01'),
-(13, 20, 2, '2024-02-12 01:23:48'),
 (15, 20, 51, '2024-02-12 06:13:34'),
 (16, 22, 2, '2024-02-13 05:53:25'),
-(17, 25, 2, '2024-02-14 22:07:08');
+(18, 25, 13, '2024-02-15 02:08:35');
 
 -- --------------------------------------------------------
 
@@ -123,7 +126,7 @@ CREATE TABLE `peminjaman` (
 
 INSERT INTO `peminjaman` (`id`, `perpus_id`, `user`, `buku`, `tanggal_peminjaman`, `tanggal_pengembalian`, `status_peminjaman`, `created_at`) VALUES
 (2, 1, 11, 1, '2024-01-21', '2024-01-24', 'Dikembalikan', '2024-02-01 01:00:49'),
-(3, 1, 2, 2, '2024-02-01', '2024-02-20', 'Dikembalikan', '2024-02-13 06:15:08'),
+(3, 1, 2, 2, '2024-02-01', '2024-02-20', 'Dikembalikan', '2024-02-19 01:02:47'),
 (5, 1, 11, 10, '2024-01-30', '2024-01-30', 'Dikembalikan', '2024-01-30 07:13:12'),
 (6, 1, 2, 1, '2024-01-30', '2024-01-30', 'Dikembalikan', '2024-01-30 07:13:03'),
 (7, 1, 2, 13, '2024-01-30', '2024-01-30', 'Dikembalikan', '2024-01-30 07:13:17'),
@@ -140,7 +143,10 @@ INSERT INTO `peminjaman` (`id`, `perpus_id`, `user`, `buku`, `tanggal_peminjaman
 (18, 1, 20, 17, '2024-02-12', '2024-02-12', 'Dikembalikan', '2024-02-12 03:47:20'),
 (19, 1, 22, 13, '2024-02-15', '2024-02-16', 'Dikembalikan', '2024-02-14 12:51:37'),
 (20, 1, 1, 2, '2024-02-14', '2024-02-15', 'Dikembalikan', '2024-02-14 12:51:55'),
-(21, 1, 25, 2, '2024-02-15', '0000-00-00', 'Dipinjam', '2024-02-14 22:06:20');
+(21, 1, 1, 2, '2024-02-15', '2024-02-15', 'Dikembalikan', '2024-02-15 03:31:34'),
+(22, 1, 1, 13, '2024-02-15', '2024-02-15', 'Dikembalikan', '2024-02-15 03:31:43'),
+(24, 1, 26, 2, '2024-02-16', '2024-02-17', 'Dikembalikan', '2024-02-17 05:36:15'),
+(25, 1, 20, 13, '2024-02-16', '2024-02-17', 'Dikembalikan', '2024-02-17 05:36:03');
 
 -- --------------------------------------------------------
 
@@ -202,7 +208,8 @@ INSERT INTO `ulasan_buku` (`id_ulasan`, `user`, `buku`, `ulasan`, `rating`, `cre
 (24, 1, 46, 'AAAAaaa lucuuu Bangetttt', 5, '2024-02-13 03:32:50'),
 (25, 22, 2, 'aaaaabagus', 5, '2024-02-13 05:54:04'),
 (26, 1, 46, 'buaguss', 4, '2024-02-13 06:22:42'),
-(27, 25, 2, 'Bagus Banget', 5, '2024-02-14 22:06:41');
+(27, 25, 2, 'Bagus Banget', 5, '2024-02-14 22:06:41'),
+(28, 25, 13, 'Kancil yang bijak', 5, '2024-02-15 02:08:12');
 
 -- --------------------------------------------------------
 
@@ -234,8 +241,8 @@ INSERT INTO `user` (`id`, `perpus_id`, `username`, `password`, `email`, `nama_le
 (18, 1, 'sur', '$2y$10$.uHhm7EgkI7v4p0gzY1Jjezh04gDTGEY9e2SLG8DUMVSgYeu2o.FS', 'suryana@gmail.com', 'Suryana', 'Balokang', 'petugas', '2024-02-05 05:47:57'),
 (19, 1, 'asep', '$2y$10$gmnvvEtLjRlK5mrPfTXsuuK/vfEzSabf8GEbfohlB6lgJ3aQ.vhl6', 'asep04@gmail.com', 'Asep', 'Banjar', 'petugas', '2024-02-05 06:12:27'),
 (20, 1, 'yogigoy', '$2y$10$VyuLOqgDGgZ/sobuRoisLuahtkjtjk1n4Ybw9NgDIbzLDgyTUMRtm', 'yogigoy@gmail.com', 'Yogi YF', 'Situbatu', 'peminjam', '2024-02-11 13:38:56'),
-(24, 1, 'albia lubang pantat', '$2y$10$FxVrs5Z255tHnyx6WvE9cOAPHmXkHuv.6Nus4MXN7oHb5AWW2QV5K', 'aal@gmail.com', 'aal', 'role ipsum', 'petugas', '2024-02-13 07:13:16'),
-(25, 1, 'iwan', '$2y$10$4ob0TbDomuKOsaHz5JVRRe0wGFt33aauhA8OG/EBIooyw2efcmu3G', 'iwan@gmail.com', 'Ridwan', 'Banjar', 'peminjam', '2024-02-14 21:55:25');
+(25, 1, 'iwan', '$2y$10$4ob0TbDomuKOsaHz5JVRRe0wGFt33aauhA8OG/EBIooyw2efcmu3G', 'iwan@gmail.com', 'Ridwan', 'Banjar', 'peminjam', '2024-02-14 21:55:25'),
+(26, 1, 'raihanrairendi', '$2y$10$4Jd6Ih8TxRRg2L.Nm3eGZeoW0RY3WZ/910mtQ5Gx0fpsDSUdOGuqi', 'raihanrairendi@gmail.com', 'Rendi Raihanrai', 'Dayeuhluhur', 'peminjam', '2024-02-16 03:38:50');
 
 --
 -- Indexes for dumped tables
@@ -291,25 +298,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `buku`
 --
 ALTER TABLE `buku`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT untuk tabel `kategori_buku`
 --
 ALTER TABLE `kategori_buku`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `koleksi_pribadi`
 --
 ALTER TABLE `koleksi_pribadi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `peminjaman`
 --
 ALTER TABLE `peminjaman`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT untuk tabel `perpustakaan`
@@ -321,13 +328,13 @@ ALTER TABLE `perpustakaan`
 -- AUTO_INCREMENT untuk tabel `ulasan_buku`
 --
 ALTER TABLE `ulasan_buku`
-  MODIFY `id_ulasan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_ulasan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

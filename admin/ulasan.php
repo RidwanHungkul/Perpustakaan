@@ -12,7 +12,8 @@ $query = "SELECT buku.id as buku_id, buku.foto, buku.judul, buku.penulis, ulasan
           AVG(ulasan_buku.rating) as average_rating
         FROM buku
         LEFT JOIN ulasan_buku ON buku.id = ulasan_buku.buku
-        GROUP BY buku.id";
+        GROUP BY buku.id
+        ORDER BY average_rating DESC";
 $result = mysqli_query($koneksi, $query);
 
 $sql1 = "SELECT * FROM buku";

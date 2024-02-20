@@ -1,6 +1,8 @@
 <?php 
 include 'koneksi.php';
 
+session_start(); // Mulai session
+
 $sql = "SELECT * FROM perpustakaan";
 $result = mysqli_query($koneksi, $sql);
 
@@ -130,27 +132,25 @@ $result = mysqli_query($koneksi, $sql);
     <div class="scrollable-form">
     <form action="proses/proses_register_peminjam.php" method="post">
         <h1>Daftar Akun</h1>
-        <?php
+        <label for="perpustakaan"></label>
+        <select class="form-control" name="perpustakaan" required>
+            <?php
             if ($result) {
-                echo "<label for='perpustakaan'></label>";
-                echo "<select class='form-control' name='perpustakaan' required>";
-
                 while ($row = mysqli_fetch_assoc($result)) {
                     $nama_perpustakaan = $row['nama_perpus'];
                     $id_perpus = $row['id'];
                     echo "<option value='$id_perpus'>$nama_perpustakaan</option>";
-                    }
-
-                    echo "</select>";
-                } else {
-                    echo "Gagal mengambil data outlet.";
                 }
-        ?>
-        <input type="text" name="username" placeholder="Username" required>
+            } else {
+                echo "<option value=''>Gagal mengambil data outlet.</option>";
+            }
+            ?>
+        </select>
+        <input type="text" name="username" placeholder="Username" value="<?php echo isset($_SESSION['username']) ? $_SESSION['username'] : ''; ?>" required>
         <input type="password" name="password" placeholder="Password" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="text" name="nama_lengkap" placeholder="Nama Lengkap" required>
-        <textarea type="textarea" name="alamat" placeholder="Alamat" required></textarea>
+        <input type="email" name="email" placeholder="Email" value="<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : ''; ?>" required>
+        <input type="text" name="nama_lengkap" placeholder="Nama Lengkap" value="<?php echo isset($_SESSION['nama_lengkap']) ? $_SESSION['nama_lengkap'] : ''; ?>" required>
+        <textarea type="textarea" name="alamat" placeholder="Alamat" required><?php echo isset($_SESSION['alamat']) ? $_SESSION['alamat'] : ''; ?></textarea>
         <input type="text" name="role" value="peminjam" style="display: none;">
         <button type="submit" name="daftar">Daftar</button>
         <a href="login.php">Kembali ke login</a>

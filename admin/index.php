@@ -11,7 +11,13 @@ if(!$_SESSION["id"]){
 $sql = "SELECT peminjaman.*, user.nama_lengkap, buku.judul 
         FROM `peminjaman`  
         INNER JOIN user ON peminjaman.user=user.id 
-        INNER JOIN buku ON peminjaman.buku=buku.id ";
+        INNER JOIN buku ON peminjaman.buku=buku.id 
+        ORDER BY 
+            CASE 
+                WHEN status_peminjaman = 'Dipinjam' THEN 0 
+                ELSE 1 
+            END,
+            tanggal_pengembalian DESC";
 $result = mysqli_query($koneksi, $sql);
 
 // Query untuk mengambil data user
@@ -25,30 +31,6 @@ $result2 = mysqli_query($koneksi, $sql2);
 // Query untuk mengambil data buku yang sedang dipinjam
 $sql3 = "SELECT * FROM peminjaman WHERE status_peminjaman='Dipinjam'";
 $result3 = mysqli_query($koneksi, $sql3);
-
-// Pagination
-$limit = 5;
-$page = isset($_GET['page']) ?$_GET['page']: 1;
-$start = ($page - 1)* $limit;
-
-// Ambil kata kunci pencarian jika ada
-$searchKeyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
-
-// Query untuk mengambil jumlah total buku
-$queryCount = "SELECT COUNT(*) AS total FROM peminjaman";
-$resultCount = mysqli_query($koneksi, $queryCount);
-$rowCount = mysqli_fetch_assoc($resultCount);
-$totalBooks = $rowCount['total'];
-
-// Query untuk mengambil data buku berdasarkan halaman dan kata kunci pencarian
-$query = "SELECT peminjaman.*, user.nama_lengkap, buku.judul 
-        FROM `peminjaman` 
-        INNER JOIN user ON peminjaman.user = user.id 
-        INNER JOIN buku ON peminjaman.buku = buku.id
-        LIMIT $start, $limit";
-$result = mysqli_query($koneksi, $query);
-
-$int = ($page - 1) * $limit;
 
 ?>
 
@@ -70,7 +52,12 @@ $int = ($page - 1) * $limit;
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style="overflow-x:hidden;">
+<style>
+  .search-form:focus{
+    outline: 2px solid #40A2E3;
+  }
+</style>
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style=" overflow-x:hidden;">
 <div class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand" style="background-color:#fff">
@@ -151,14 +138,14 @@ $int = ($page - 1) * $limit;
 
 
   <!-- Content Wrapper -->
-  <div class="content-wrapper" style="background-color: #EEEEEE; color:#161A30;">
+  <div class="content-wrapper" style="background-color: #fff; color:#161A30;">
     <!-- Content Header (Page header) -->
     <div class="content-header">
     </div>
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
+      <div class="container-fluid" style="border-bottom:0px solid #0F1035">
         <div class="row">
 
           <div class="col-12 col-sm-6 col-md-3">
@@ -172,7 +159,7 @@ $int = ($page - 1) * $limit;
           </div>
 
           <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3" style="background-color:#FE0000; color:#fff;">
+            <div class="info-box mb-3" style="background-color:#FF9843; color:#fff;">
               <span class="info-box-icon "><i class="fa-solid fa-book"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Buku</span>
@@ -196,76 +183,78 @@ $int = ($page - 1) * $limit;
     </section>
 
     <!-- Data yang di dalam tabel -->
-    <div class="content d-flex shadow p-3 mb-5 bg-body-tertiary rounded" style=" width:95%; height:410px; border-radius:3px; margin:0 auto; background-color:#fff;">
-      <div class="judul" style="height:30px; width:200px;">
+    <div class="header d-flex p-2 mb-3 ml-4" style="width:100%; height:50px;">
+    <div class="judul" style="height:30px; width:200px; position:relative; top:15px;">
         <h5>Data Peminjaman</h5>
-      </div>
-
-      <div class="table-container d-flex" style="width:77%; position:absolute; top:190px; right:30px;">
-        <div class="container d-flex" style="position:relative; width:100%;">
-          <table class="table">
-            <?php 
-            echo "<thead><tr><th>No</th><th>Nama Peminjam</th><th>Buku</th><th>Tanggal Peminjaman</th><th>Tanggal Pengembalian</th><th>Status</th><th>Aksi</th></tr></thead>";
-              if($result->num_rows>0){$i=0;
-                while ($row = $result->fetch_assoc()){  $i++;
-                  echo "<tr>";
-                    echo "<td>" . $i . "</td>";
-                    echo "<td>" . (isset($row["nama_lengkap"]) ? $row["nama_lengkap"] : "") . "</td>";
-                    echo "<td>" . (isset($row["judul"]) ? $row["judul"] : "") . "</td>";
-                    echo "<td>" . $row["tanggal_peminjaman"] . "</td>";
-                    echo "<td>" . $row["tanggal_pengembalian"] . "</td>";
-                    echo "<td>" . $row["status_peminjaman"] . "</td>";
-                    echo "<td>
-                            <a href='edit/edit_dashboard.php?id=" . $row['id'] . " 'class='btn btn-sm' style='background-color:#FE7A36; color:#fff'><i class='fa-solid fa-pen-to-square'></i></a>
-                            <a target='_blank' href='../proses/download.php?id=" . $row['id'] . " 'class='btn btn-sm' style='background-color:#FF4646; color:#fff'><i class='fa-solid fa-file-arrow-down'></i></a>
-                          </td>";
-                  echo "</tr>";
-                }
-                  echo "</tbody></table>";
-                }else{
-                  echo "Data tidak ditemukan";
-              }
-            ?>
-          </table>
-        </div>
+    </div>
+    <div class="search" style="position: relative;left:650px; border-radius: 5px; top:7px; ">
+        <form class="form-inline" action="" method="GET">
+            <input id="searchInput" class="search-form " type="search" placeholder="Search" aria-label="Search" 
+                   name="query" style="width:100%; padding:5px 10px; border-radius: 10px; border:2px solid #40A2E3">
+        </form>
+    </div>
+    </div>
+     <div class="table-container d-flex" style="width:100%;">
+      <div class="container d-flex" style="position:relative; width:100%;">
+      <table class="table" style="width:1057px; margin-left:13px">
+        <thead>
+        <tr>
+                <th style="width: 52px;">No</th>
+                <th style="width: 180px">Nama Peminjam</th>
+                <th style="width: 210px">Buku</th>
+                <th style="width: 178px">Tanggal Peminjaman</th>
+                <th style="width: 184px">Tanggal Pengembalian</th>
+                <th style="width: 148px">Status</th>
+                <th>Aksi</th>
+        </tr>
+        </thead>
+      </table>
       </div>
     </div>
-
-    <nav>
-      <ul class="pagination" style="position:relative;left:82%;">
-        <?php if ($page > 1): ?>
-            <li class="page-item">
-                <a class="page-link" href="?page=<?php echo ($page - 1); ?>&keyword=<?php echo $searchKeyword; ?>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-        <?php endif; ?>
-
-        <?php
-        // Hitung jumlah halaman yang akan ditampilkan sesuai dengan batasan maksimum (3)
-        $maxPages = min($page + 2, ceil($totalBooks / $limit));
-        $minPages = max(1, $maxPages - 2);
+    <div class="content" style="width: 99%; height: 410px; border-radius: 3px; margin: 0 auto; overflow-y: scroll; margin-top:-17px;">
+    <!-- Kontainer tabel -->
+    <div class="table-container d-flex" style="width:100%;">
+    <div class="container d-flex" style="position:relative; width:100%;">
+      <table class="table">
+        <tbody>
+        <?php 
+        if($result->num_rows>0){$i=0;
+          while ($row = $result->fetch_assoc()){  $i++;
+            echo "<tr class='searchable'>";
+            echo "<td style='width: 52px;'>" . $i . "</td>";
+            echo "<td style='width: 180px'>" . (isset($row["nama_lengkap"]) ? $row["nama_lengkap"] : "") . "</td>";
+            echo "<td style='width: 210px'>" . (isset($row["judul"]) ? $row["judul"] : "") . "</td>";
+            echo "<td style='width: 178px'>" . $row["tanggal_peminjaman"] . "</td>";
+            echo "<td style='width: 178px'>" . $row["tanggal_pengembalian"] . "</td>";
+            if($row['status_peminjaman'] === 'Dikembalikan'){
+              echo "<td>";
+              echo  "<span style='color:green; padding:5px 15px;border-radius:20px; background-color:#E9F9F9;'>";
+              echo  "<b>Dikembalikan</b>";
+              echo "</span>";
+              echo "</td>";
+            }elseif($row['status_peminjaman'] === 'Dipinjam'){
+              echo "<td style='color: red;'>";
+              echo  "<span style='color:red; padding:5px 15px;border-radius:20px; background-color:#FFE9C5;'>";
+              echo  "<b>Dipinjam</b>";
+              echo "</span>";
+              echo "</td>";
+            }
+            echo "<td>
+            <a href='edit/edit_dashboard.php?id=" . $row['id'] . " 'class='btn btn-sm' style='background-color:#86A7FC; color:#fff'><i class='fa-solid fa-pen-to-square'></i></a>
+            <a target='_blank' href='../proses/download.php?id=" . $row['id'] . " 'class='btn btn-sm' style='background-color:#FF4646; color:#fff'><i class='fa-solid fa-file-arrow-down'></i></a>
+            </td>";
+            echo "</tr>";
+          }
+          echo "</tbody></table>";
+        }else{
+          echo "Data tidak ditemukan";
+        }
         ?>
-
-        <?php for ($i = $minPages; $i <= $maxPages; $i++): ?>
-            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-                <a class="page-link" href="?page=<?php echo $i; ?>&keyword=<?php echo $searchKeyword; ?>"><?php echo $i; ?></a>
-            </li>
-        <?php endfor; ?>
-
-        <?php if ($maxPages < ceil($totalBooks / $limit)): ?>
-            <li class="page-item disabled">
-                <span class="page-link">...</span>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="?page=<?php echo ($maxPages + 1); ?>&keyword=<?php echo $searchKeyword; ?>" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        <?php endif; ?>
-      </ul>
-    </nav>
-
+      </table>
+    </div>
+  </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -292,5 +281,36 @@ $int = ($page - 1) * $limit;
 <script src="../dashboard/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../dashboard/dist/js/pages/dashboard2.js"></script>
+<script>
+  $(document).ready(function(){
+        // Add an input event listener to the search input
+        $("#searchInput").on("input", function() {
+            let searchTerm = $(this).val().toLowerCase(); // Get the value of the input and convert to lowercase
+
+            // Keep track if any results are found
+            let resultsFound = false;
+
+            // Loop through each searchable card
+            $(".searchable").each(function() {
+                let cardText = $(this).text().toLowerCase(); // Get the text content of the card and convert to lowercase
+
+                // Check if the card text contains the search term
+                if (cardText.includes(searchTerm)) {
+                    $(this).show(); // If yes, show the card
+                    resultsFound = true; // Mark that results are found
+                } else {
+                    $(this).hide(); // If no, hide the card
+                }
+            });
+
+            // Show/hide the no results message based on resultsFound
+            if (resultsFound) {
+                $("#noResultsMessage").hide();
+            } else {
+                $("#noResultsMessage").show();
+            }
+      });
+   });
+</script>
 </body>
 </html>

@@ -30,7 +30,12 @@ $result = mysqli_query($koneksi, $sql);
   <link rel="stylesheet" href="../dashboard/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<style>
+  .search-form:focus{
+    outline: 2px solid #40A2E3;
+  }
+</style>
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style="overflow-x:hidden; overflow-y:hidden;">
 <div class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand " style="background-color:#fff">
@@ -118,31 +123,40 @@ $result = mysqli_query($koneksi, $sql);
 
     <!-- Main content -->
    <section class="content">
-    <div class="content-wrape shadow p-3 mb-5 bg-body-tertiary" style="width:100%;padding:10px;background:#fff;border-radius:7px;">
+    <div class="content-wrape shadow p-3 mb-5 bg-body-tertiary" style="width:100%;padding:10px;background:#fff;border-radius:7px; height:510px">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
             <h2 style="color:#161A30;">Kategori</h2>
             <a href="input/input_kategori.php">
-              <button type="button" class="btn btn-primary" style="margin-left:160%;margin-top:-45px;position:absolute;width:168px;">+ Tambah Kategori</button>
+              <button type="button" class="btn btn-primary" style="margin-left:190%;margin-top:-45px;position:absolute;"><i class="fa-solid fa-plus"></i></button>
             </a>
           </div>            
         </div>
       </div>
-    <div class="container-fluid" style="width: 90%;">
+      <div class="search" style="position: relative; left: 795px; top:-16px; margin-top: -37px; width:220px">
+        <form class="form-inline" action="" method="GET">
+            <input id="searchInput" class="search-form" type="search" placeholder="Search" aria-label="Search" name="keyword" style="width: 100%; padding: 5px 10px; border-radius: 10px; border: 2px solid #40A2E3">
+        </form>
+    </div>
+    <div class="container-fluid" style="width: 90%; margin-top:10px; ">
     <table class="table">
         <thead>
             <tr>
-                <th>No</th>
-                <th>Nama Kategori</th>
+                <th style="width:100px">No</th>
+                <th style="width:600px">Nama Kategori</th>
                 <th>Aksi</th>
             </tr>
         </thead>
+    </table>
+    </div>
+    <div class="container-fluid" style="width: 90%; height: 340px; overflow-y: scroll;">
+    <table class="table" style="position:relative; top:-10px;"> 
         <tbody>
             <?php $i=0; while ($row = mysqli_fetch_assoc($result)) :  $i++; ?>
-                <tr>
-                    <td><?= $i ?></td>
-                    <td><?= $row['nama_kategori'] ?></td>
+                <tr class="searchable">
+                    <td style="width:100px"><?= $i ?></td>
+                    <td style="width:600px"><?= $row['nama_kategori'] ?></td>
                     <td>
                         <a href="edit/edit_kategori.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a href="delete/delete_kategori.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
@@ -179,5 +193,36 @@ $result = mysqli_query($koneksi, $sql);
 <script src="../dashboard/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../dashboard/dist/js/pages/dashboard2.js"></script>
+<script>
+  $(document).ready(function(){
+        // Add an input event listener to the search input
+        $("#searchInput").on("input", function() {
+            let searchTerm = $(this).val().toLowerCase(); // Get the value of the input and convert to lowercase
+
+            // Keep track if any results are found
+            let resultsFound = false;
+
+            // Loop through each searchable card
+            $(".searchable").each(function() {
+                let cardText = $(this).text().toLowerCase(); // Get the text content of the card and convert to lowercase
+
+                // Check if the card text contains the search term
+                if (cardText.includes(searchTerm)) {
+                    $(this).show(); // If yes, show the card
+                    resultsFound = true; // Mark that results are found
+                } else {
+                    $(this).hide(); // If no, hide the card
+                }
+            });
+
+            // Show/hide the no results message based on resultsFound
+            if (resultsFound) {
+                $("#noResultsMessage").hide();
+            } else {
+                $("#noResultsMessage").show();
+            }
+      });
+   });
+</script>
 </body>
 </html>

@@ -6,15 +6,15 @@ session_start();
 if(!$_SESSION["id"]){
   header("Location:../login.php");
 }
+if($_GET){
+$bukuid = $_GET["id"];
+}
 
-$idbuku = $_GET["id"];
-
-
-$query1 = isset($idbuku) ? "SELECT buku.id as buku_id, buku.judul, buku.foto, buku.tahun_terbit, buku.penulis, buku.penerbit, ulasan_buku.buku, ulasan_buku.rating,
+$query1 = isset($bukuid) ? "SELECT buku.id as buku_id, buku.judul, buku.foto, buku.tahun_terbit, buku.penulis, buku.penerbit, ulasan_buku.buku, ulasan_buku.rating,
           AVG(ulasan_buku.rating) as rating_buku
         FROM buku
         LEFT JOIN ulasan_buku ON buku.id = ulasan_buku.buku
-        WHERE buku.kategori_id = '$idbuku'
+        WHERE buku.kategori_id = '$bukuid'
         GROUP BY buku.id" : 
 
         "SELECT buku.id as buku_id, buku.judul, buku.foto, buku.tahun_terbit, buku.penulis, buku.penerbit, ulasan_buku.buku, ulasan_buku.rating,
@@ -25,7 +25,7 @@ $query1 = isset($idbuku) ? "SELECT buku.id as buku_id, buku.judul, buku.foto, bu
 $result2 = mysqli_query($koneksi, $query1);
 
 
-$query_buku = isset($idbuku) ? "SELECT * FROM buku WHERE kategori_id = $idbuku" : "SELECT * FROM buku";
+$query_buku = isset($bukuid) ? "SELECT * FROM buku WHERE kategori_id = $bukuid" : "SELECT * FROM buku";
 $resultbuku = mysqli_query($koneksi,$query_buku);
 
 $username = $_SESSION['username'];  
@@ -48,11 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             // Buku ditemukan, lanjutkan proses bookmark
             if ($action == 'add') {
                 // Jika action=add, tambahkan buku ke koleksi pribadi
-                $insertQuery = "INSERT INTO koleksi_pribadi (user, buku) VALUES ((SELECT id FROM user WHERE username = '$username'), $idbuku)";
+                $insertQuery = "INSERT INTO koleksi_pribadi (user, buku) VALUES ((SELECT id FROM user WHERE username = '$username'), $bukuid)";
                 mysqli_query($koneksi, $insertQuery);
             } elseif ($action == 'delete') {
                 // Jika action=delete, hapus buku dari koleksi pribadi
-                $deleteQuery = "DELETE FROM koleksi_pribadi WHERE user = (SELECT id FROM user WHERE username = '$username') AND buku = $idbuku";
+                $deleteQuery = "DELETE FROM koleksi_pribadi WHERE user = (SELECT id FROM user WHERE username = '$username') AND buku = $bukuid";
                 mysqli_query($koneksi, $deleteQuery);
             }
 
@@ -133,13 +133,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="search">
-        <form class="form-inline" action="search.php" method="GET">
-            <input id="searchInput" class="search-form" type="search" placeholder="Cari buku..." aria-label="Search" name="query">
+        <form class="form-inline" action="" method="GET">
+            <input id="searchInput" class="search-form" style="position: relative; top:-1px" type="search" placeholder="Cari buku..." aria-label="Search" name="query">
         </form>
       </li>
       <li class="nav-item">
         <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
-          <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1; position:relative; top: 12px;"></i>
+          <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1;"></i>
         </a>
       </li>
     </ul>
@@ -180,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="background-color: #fff; color:#161A30;margin-top:30px; margin-left:268px">
+  <div class="content-wrapper" style="background-color: #fff; color:#161A30;margin-top:75px; margin-left:268px">
 <div class="container" style="width:100%;">
     <div class="table-container d-flex" style="margin-left:20px">
     <div class="container d-flex flex-wrap" style="position:relative; width:100%;">
@@ -196,8 +196,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             <p>Tahun terbit: <?= $rew['tahun_terbit'] ?></p>
               <?php 
                 $iduser = $_SESSION['id'];
-                $idbuku = $rew['buku_id'];
-                $sql = "SELECT * FROM peminjaman WHERE status_peminjaman = 'Dipinjam' AND user = '$iduser' AND buku='$idbuku' ";
+                $bukuid = $rew['buku_id'];
+                $sql = "SELECT * FROM peminjaman WHERE status_peminjaman = 'Dipinjam' AND user = '$iduser' AND buku='$bukuid' ";
                 $result = mysqli_query($koneksi,$sql);
                 if(mysqli_num_rows($result) > 0){
                  ?>
@@ -217,11 +217,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         $checkResult = mysqli_query($koneksi, $checkQuery);
 
                         if (mysqli_num_rows($checkResult) > 0) :?>
-                            <a href="index.php?id=<?=$rew['buku_id'];?>&action=delete" class="btn btn-secondary" onclick="return confirmDelete()">
-                            <i class="fa-solid fa-bookmark"></i></a>
+                            <a  style="height:32px;" href="index.php?id=<?=$rew['buku_id'];?>&action=delete" class="btn btn-secondary" onclick="return confirmDelete()">
+                            <i class="fa-solid fa-bookmark d-flex" style="align-items:center;"></i></a>
                         <?php else :?>
-                            <a href="index.php?id=<?=$rew['buku_id'];?>&action=add" class="btn btn-secondary">
-                            <i class="fa-regular fa-bookmark"></i></a>
+                            <a  style="height:32px;" href="index.php?id=<?=$rew['buku_id'];?>&action=add" class="btn btn-secondary">
+                            <i class="fa-regular fa-bookmark d-flex" style="align-items:center;"></i></a>
                       <?php endif; ?>
         </div>
     </div>
