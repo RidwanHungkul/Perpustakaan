@@ -158,7 +158,7 @@ $result = mysqli_query($koneksi, $sql);
                     <td style="width:100px"><?= $i ?></td>
                     <td style="width:600px"><?= $row['nama_kategori'] ?></td>
                     <td>
-                        <a href="edit/edit_kategori.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="edit/edit_kategori.php?id=<?= $row['id'] ?>" class="btn btn-sm" style="background-color:#86A7FC; color:#fff;"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a href="delete/delete_kategori.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>

@@ -145,11 +145,11 @@ $result3 = mysqli_query($koneksi, $sql3);
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid" style="border-bottom:0px solid #0F1035">
+      <div class="container-fluid">
         <div class="row">
 
           <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box"  style="background-color:#40A2E3; color:#fff;">
+            <div class="info-box"  style="background-color:#40A2E3; color:#fff; border-radius:10px">
               <span class="info-box-icon"><i class="fas fa-users"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Pengguna</span>
@@ -159,7 +159,7 @@ $result3 = mysqli_query($koneksi, $sql3);
           </div>
 
           <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3" style="background-color:#FF9843; color:#fff;">
+            <div class="info-box mb-3" style="background-color:#FF9843; color:#fff; border-radius:10px">
               <span class="info-box-icon "><i class="fa-solid fa-book"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Buku</span>
@@ -169,7 +169,7 @@ $result3 = mysqli_query($koneksi, $sql3);
           </div>
 
           <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3" style="background-color:#65B741; color:#fff;">
+            <div class="info-box mb-3" style="background-color:#65B741; color:#fff; border-radius:10px">
               <span class="info-box-icon  "><i class="fa-solid fa-book"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Peminjaman</span>
@@ -190,7 +190,7 @@ $result3 = mysqli_query($koneksi, $sql3);
     <div class="search" style="position: relative;left:650px; border-radius: 5px; top:7px; ">
         <form class="form-inline" action="" method="GET">
             <input id="searchInput" class="search-form " type="search" placeholder="Search" aria-label="Search" 
-                   name="query" style="width:100%; padding:5px 10px; border-radius: 10px; border:2px solid #40A2E3">
+                   name="query" style="width:100%; padding:5px 10px; border-radius: 7px; border:2px solid #40A2E3">
         </form>
     </div>
     </div>

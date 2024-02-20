@@ -149,7 +149,7 @@ $int = 0;
     <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h2 style="color:#161A30;">Pengguna</h2>
+            <h2 style="color:#161A30; position:relative; top:13px">Pengguna</h2>
             <a href="input/registrasi_pengguna.php">
               <button type="button" class="btn btn-primary" style="margin-left:188%;margin-top:-30px;position:absolute;"><i class="fa-solid fa-plus"></i></button>
             </a>
