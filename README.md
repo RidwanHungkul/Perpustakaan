@@ -1,4 +1,4 @@
-# Perpustakaan Digital XYZ
+# Perpustakaan Digital
 
 Selamat datang di Perpustakaan Digital, Repositori ini adalah sebuah aplikasi perpustakaan digital yang memungkinkan pengguna untuk mencari dan meminjam berbagai buku secara elektronik.
 
