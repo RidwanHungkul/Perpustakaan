@@ -200,7 +200,7 @@ $result2 = mysqli_query($koneksi, $sql2);
                         <td style="width: 257px;"><?= $row['penerbit'] ?></td>
                         <td style="width: 115px;"><?= $row['tahun_terbit'] ?></td>
                         <td>
-                            <a href="edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-sm" style='background-color:#86A7FC; color:#fff'><i class="fa-solid fa-pen-to-square"></i></a>
                             <a href="../delete/delete_buku.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
                         </td>
                     </tr>
