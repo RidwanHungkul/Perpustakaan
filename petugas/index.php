@@ -10,7 +10,13 @@ if(!$_SESSION["id"]){
 $sql = "SELECT peminjaman.*, user.nama_lengkap, buku.judul 
         FROM `peminjaman` 
         INNER JOIN user ON peminjaman.user=user.id 
-        INNER JOIN buku ON peminjaman.buku=buku.id";
+        INNER JOIN buku ON peminjaman.buku=buku.id
+        ORDER BY 
+            CASE 
+                WHEN status_peminjaman = 'Dipinjam' THEN 0 
+                ELSE 1 
+            END,
+            tanggal_pengembalian DESC";
 $result = mysqli_query($koneksi, $sql);
 
 $sql1 = "SELECT * FROM user";

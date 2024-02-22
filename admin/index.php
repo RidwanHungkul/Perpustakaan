@@ -32,6 +32,8 @@ $result2 = mysqli_query($koneksi, $sql2);
 $sql3 = "SELECT * FROM peminjaman WHERE status_peminjaman='Dipinjam'";
 $result3 = mysqli_query($koneksi, $sql3);
 
+$sql4 = "SELECT * FROM ulasan_buku";
+$result4 = mysqli_query($koneksi, $sql4);
 ?>
 
 <!DOCTYPE html>
@@ -170,10 +172,20 @@ $result3 = mysqli_query($koneksi, $sql3);
 
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3" style="background-color:#65B741; color:#fff; border-radius:10px">
-              <span class="info-box-icon  "><i class="fa-solid fa-book"></i></span>
+              <span class="info-box-icon  "><i class="fa-solid fa-hand-holding-hand"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Peminjaman</span>
                 <span class="info-box-number"><?php echo mysqli_num_rows($result3)?></span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3" style="background-color:#FF6868; color:#fff; border-radius:10px">
+              <span class="info-box-icon  "><i class="fa-solid fa-comment"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Ulasan</span>
+                <span class="info-box-number"><?php echo mysqli_num_rows($result4)?></span>
               </div>
             </div>
           </div>

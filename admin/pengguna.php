@@ -11,7 +11,7 @@ if (!$_SESSION["id"]) {
 $sql = "SELECT user.*, perpustakaan.nama_perpus 
         FROM `user` 
         INNER JOIN  perpustakaan ON user.perpus_id=perpustakaan.id
-        ORDER BY FIELD(role, 'petugas') DESC, nama_lengkap ASC;";
+        ORDER BY FIELD(role, 'petugas','admin' ) DESC, nama_lengkap ASC;";
 
 // Ambil kata kunci pencarian jika ada
 $searchKeyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
@@ -194,6 +194,12 @@ $int = 0;
                       <td style="width: 140px;">
                         <span style="color:green; padding:5px 15px;border-radius:20px; background-color:#DCFFB7;">
                           <b>Peminjam</b>
+                        </span>
+                      </td>
+                    <?php elseif($row['role'] === 'admin') : ?>
+                      <td style="width: 140px;">
+                        <span style="color:red; padding:5px 15px;border-radius:20px; background-color:#F8C4B4;">
+                          <b>Admin</b>
                         </span>
                       </td>
                     <?php endif; ?>

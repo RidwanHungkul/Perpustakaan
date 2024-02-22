@@ -136,9 +136,9 @@ $result = mysqli_query($koneksi , $query);
           </li>
           <li class="nav-item menu-open">
             <a href="bookmark.php" class="nav-link active">
-              <i class="nav-icon fa-solid fa-bookmark"></i>
+              <i class="nav-icon fa-solid fa-heart"></i>
               <p>
-                Bookmark
+                Favourite
               </p>
             </a>
           </li>
@@ -161,7 +161,7 @@ $result = mysqli_query($koneksi , $query);
             <p>Tahun terbit: <?= $row['tahun_terbit'] ?></p>
             <a href="bookmark.php?id=<?= $row['id'] ?>&action=delete" style="margin-left:240px;"
             class="btn btn-sm btn-secondary" onclick="return confirm('Yakin menghapus buku ini dari bookmark')">
-            <i class="fa-solid fa-bookmark"></i></a>
+            <i class="fa-solid fa-heart"></i></a>
         </div>
     </div>
     <?php endwhile; ?>

@@ -168,9 +168,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
           </li>
           <li class="nav-item menu">
             <a href="bookmark.php" class="nav-link">
-              <i class="nav-icon fa-solid fa-bookmark"></i>
+              <i class="nav-icon fa-solid fa-heart"></i>
               <p>
-                Bookmark
+                Favourite
               </p>
             </a>
           </li>
@@ -201,11 +201,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 $result = mysqli_query($koneksi,$sql);
                 if(mysqli_num_rows($result) > 0){
                  ?>
-                  <a href="#" class="btn btn-sm btn-secondary">
+                  <a href="proses/proses_pengembalian_peminjaman.php?id=<?= $rew['buku_id'] ?>" class="btn btn-sm btn-secondary">
                       Sedang dipinjam
                   </a>
                 <?php } else { ?>
-                  <a href="peminjaman.php?id=<?= $rew['buku_id'] ?>" class="btn btn-sm btn-primary" style="">
+                  <a href="proses/proses_input_peminjaman.php?id=<?= $rew['buku_id'] ?>" class="btn btn-sm btn-primary">
                       Pinjam
                   </a>
                 <?php } ?>
@@ -218,10 +218,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
                         if (mysqli_num_rows($checkResult) > 0) :?>
                             <a  style="height:32px;" href="index.php?id=<?=$rew['buku_id'];?>&action=delete" class="btn btn-secondary" onclick="return confirmDelete()">
-                            <i class="fa-solid fa-bookmark d-flex" style="align-items:center;"></i></a>
+                            <i class="fa-solid fa-heart d-flex" style="align-items:center;"></i></a>
                         <?php else :?>
                             <a  style="height:32px;" href="index.php?id=<?=$rew['buku_id'];?>&action=add" class="btn btn-secondary">
-                            <i class="fa-regular fa-bookmark d-flex" style="align-items:center;"></i></a>
+                            <i class="fa-regular fa-heart d-flex" style="align-items:center;"></i></a>
                       <?php endif; ?>
         </div>
     </div>
