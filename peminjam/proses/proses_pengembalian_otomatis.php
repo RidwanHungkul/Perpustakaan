@@ -1,27 +1,50 @@
 <?php
+session_start();
+
 include '../../koneksi.php';
 
-// Cek peminjaman yang telah melewati batas waktu pengembalian
-$today = date('Y-m-d');
-$expiredDate = date('Y-m-d', strtotime('-2 days', strtotime($today))); // Tanggal dua hari sebelumnya
+if (!isset($_SESSION['ud'])) {
+    echo "<script>alert('Tolong login terlebih dahulu'); window.location.href = '../login.php';</script>";
+    exit();
+}
 
-$getExpiredPeminjamanQuery = "SELECT id, buku FROM peminjaman WHERE status_peminjaman = 'Dipinjam' AND tanggal_pengembalian < '$expiredDate'";
-$getExpiredPeminjamanResult = mysqli_query($koneksi, $getExpiredPeminjamanQuery);
+$id = $_SESSION['id'];
 
-if ($getExpiredPeminjamanResult) {
-    while ($row = mysqli_fetch_assoc($getExpiredPeminjamanResult)) {
-        $peminjamanId = $row['id'];
-        $bookId = $row['buku'];
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
+    $bookId = $_GET['id'];
 
-        // Perbarui status peminjaman menjadi "Dikembalikan"
-        $updatePeminjamanQuery = "UPDATE peminjaman SET status_peminjaman = 'Dikembalikan' WHERE id = $peminjamanId";
-        mysqli_query($koneksi, $updatePeminjamanQuery);
 
-        // Tambahkan stok buku yang sesuai
-        $updateStokQuery = "UPDATE buku SET stok = stok + 1 WHERE id = $bookId";
-        mysqli_query($koneksi, $updateStokQuery);
+    // Periksa apakah buku sudah dipinjam sebelumnya
+    $checkPeminjamanQuery = "SELECT * FROM peminjaman WHERE user = $id AND buku = $bookId AND status_peminjaman = 'Dipinjam'";
+    $checkPeminjamanResult = mysqli_query($conn, $checkPeminjamanQuery);
+
+    if (mysqli_num_rows($checkPeminjamanResult) > 0) {
+        // Jika buku sudah dipinjam, tambahkan tanggal_pengembalian hari ini
+        $tanggalPengembalian = date('Y-m-d');
+
+        // Perbarui status peminjaman menjadi 'Dikembalikan' dan tambahkan tanggal pengembalian
+        $updatePeminjamanQuery = "UPDATE peminjaman SET tanggal_pengembalian = '$tanggalPengembalian', status_peminjaman = 'Dikembalikan' WHERE user = $id AND buku = $bookId AND status_peminjaman = 'Dipinjam'";
+        
+        if (mysqli_query($conn, $updatePeminjamanQuery)) {
+            // Setelah pengembalian berhasil, tambahkan stok buku dengan satu
+            $updateStokQuery = "UPDATE buku SET stok = stok + 1 WHERE id = $bookId";
+            mysqli_query($conn, $updateStokQuery);
+
+            // Pengembalian berhasil, alihkan kembali pengguna ke halaman utama atau berikan pesan konfirmasi
+            header("Location: index.php");
+            exit();
+        } else {
+            // Jika terjadi kesalahan saat melakukan pengembalian, berikan pesan kesalahan atau tangani sesuai kebutuhan
+            echo "Error: " . $updatePeminjamanQuery . "<br>" . mysqli_error($conn);
+        }
+    } else {
+        // Jika buku belum dipinjam, berikan pesan kepada pengguna atau tangani sesuai kebutuhan
+        echo "Buku belum dipinjam.";
+        exit();
     }
 } else {
-    echo "Gagal mendapatkan peminjaman yang telah kadaluarsa.";
+    // Jika tidak ada parameter ID buku yang diberikan, alihkan pengguna kembali ke halaman utama atau berikan pesan kesalahan
+    header("Location: index.php");
+exit();
 }
 ?>

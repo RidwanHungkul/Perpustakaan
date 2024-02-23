@@ -78,11 +78,19 @@ $review = mysqli_query($koneksi, $view);
               </p>
             </a>
           </li>
-          <li class="nav-item menu">
+          <li class="nav-item">
             <a href="bookmark.php" class="nav-link">
-              <i class="nav-icon fa-solid fa-bookmark"></i>
+              <i class="nav-icon fa-solid fa-heart"></i>
               <p>
-                Bookmark
+                Favourite
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="peminjaman.php" class="nav-link">
+              <i class="nav-icon fa-solid fa-book"></i>
+              <p>
+                Peminjaman
               </p>
             </a>
           </li>

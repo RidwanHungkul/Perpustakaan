@@ -166,11 +166,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
               </p>
             </a>
           </li>
-          <li class="nav-item menu">
+          <li class="nav-item">
             <a href="bookmark.php" class="nav-link">
               <i class="nav-icon fa-solid fa-heart"></i>
               <p>
                 Favourite
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="peminjaman.php" class="nav-link">
+              <i class="nav-icon fa-solid fa-book"></i>
+              <p>
+                Peminjaman
               </p>
             </a>
           </li>
@@ -181,9 +189,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="background-color: #fff; color:#161A30;margin-top:75px; margin-left:268px">
-<div class="container" style="width:100%;">
-    <div class="table-container d-flex" style="margin-left:20px">
-    <div class="container d-flex flex-wrap" style="position:relative; width:100%;">
+    <div class="container" style="width:100%;">
+      <div class="table-container d-flex" style="margin-left:20px">
+        <div class="container d-flex flex-wrap" style="position:relative; width:100%;">
         <?php while ($rew = mysqli_fetch_assoc($result2)) : ?>
         <div class="card ml-4 searchable" style="width:300px; position:relative;top:15px;border-radius:6px;">
         <div class="foto">

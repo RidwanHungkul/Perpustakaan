@@ -7,12 +7,17 @@ if(!$_SESSION["id"]){
   header("Location:../login.php");
 }
 
-$id = $_GET['id'];
-$sql = "SELECT * FROM perpustakaan";
-$result = mysqli_query($koneksi, $sql);
 
-$sql2 = "SELECT * FROM buku WHERE id='$id'";
-$result2 = mysqli_query($koneksi, $sql2);
+// Query untuk mengambil data buku yang dipinjam oleh pengguna dengan tanggal pengembalian yang masih 0
+$id = $_SESSION['id'];
+$query = "SELECT b.* 
+          FROM buku b
+          JOIN peminjaman p ON b.id = p.buku
+          JOIN user u ON p.user = u.id
+          WHERE u.id = '$id'
+          AND p.status_peminjaman = 'dipinjam'";
+$result = mysqli_query($koneksi, $query);
+
 ?>
 
 
@@ -34,10 +39,52 @@ $result2 = mysqli_query($koneksi, $sql2);
   <link rel="stylesheet" href="../dashboard/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">  
 </head>
+<style>
+    .foto{
+      overflow: hidden;
+      width: 100%;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .foto img{
+      max-width: 100%;
+      min-width: 100%;
+      min-height: 320px;
+      transition: 0.3s linear;
+    }
+    .foto:hover img{
+      transform:scale(0.74);
+
+    }
+    .search{
+      width: 800px;
+      margin-right: 120px;
+    }
+    .search-form{
+      width: 100%;
+      height: 40px;
+      border-radius: 50px;
+      position: relative;
+      top:8px;
+      padding: 20px;
+      border: 1px solid grey;
+    }
+</style>
 <body class="hold-transition  sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
   <!-- Navbar -->
-  
+  <nav class="main-header navbar navbar-expand" style="background-color:#fff">
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
+          <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1;"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -52,19 +99,27 @@ $result2 = mysqli_query($koneksi, $sql2);
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item menu-open">
-            <a href="index.php" class="nav-link active">
+          <li class="nav-item">
+            <a href="index.php" class="nav-link">
               <i class="nav-icon fa-solid fa-house"></i>
               <p>
                 Home
               </p>
             </a>
           </li>
-          <li class="nav-item menu">
+          <li class="nav-item">
             <a href="bookmark.php" class="nav-link">
-              <i class="nav-icon fa-solid fa-bookmark"></i>
+              <i class="nav-icon fa-solid fa-heart"></i>
               <p>
-                Bookmark
+                Favourite
+              </p>
+            </a>
+          </li>
+          <li class="nav-item menu-open">
+            <a href="peminjaman.php" class="nav-link active">
+              <i class="nav-icon fa-solid fa-book"></i>
+              <p>
+                Peminjaman
               </p>
             </a>
           </li>
@@ -73,75 +128,41 @@ $result2 = mysqli_query($koneksi, $sql2);
     </div>
   </aside>
 
-  <div class="content-wrapper" style="margin-top:-1px; background-color: #eeee; color:#161A30;">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-    </section>
-
-    <!-- Main content -->
-   <section class="content mt-5">
-    <div class="content-wraper shadow p-3 mb-5 bg-body-tertiary" style="width:40%;margin-left:30%;padding:10px;background:#fff;border-radius:7px;">
-  <div class="container-fluid">
-    <h2 style="color:#161A30; text-align:center;">Peminjaman</h2>
-    <a href="index.php" style="position:relative;top:-50px"><button type="button" class="close" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-    </button></a>
-    <form action="proses/proses_input_peminjaman.php" method="post">
-      <?php
-            if ($result) {
-                echo "<label for='perpustakaan' style='display:none;'>Perpustakaan :</label>";
-                echo "<select class='form-control' name='perpustakaan' style='display:none;' required>";
-
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $nama_perpustakaan = $row['nama_perpus'];
-                    $id_perpus = $row['id'];
-                    echo "<option value='$id_perpus'>$nama_perpustakaan</option>";
-                    }
-
-                    echo "</select>";
-                } else {
-                    echo "Gagal mengambil data";
-                }
-        ?>
-        <div class="form-grup">
-            <label for="nama">Nama :</label>
-            <select name="nama" id="" class="form-control">
-            <option value="<?= $_SESSION['id'] ?>"><?=$_SESSION['nama_lengkap'] ?></option>
-            </select>
+  <div class="content-wrapper">
+   <div class="container" style="width:100%">
+    <div class="table-container d-flex" style="margin-left:20px">
+      <div class="container d-flex flex-wrap" style="position:relative; width:100%;">
+      <?php while ($rew = mysqli_fetch_assoc($result)) :  ?>
+        <div class="card ml-4" style="width:300px; position:relative;top:15px;border-radius:6px;">
+          <div class="foto">
+            <img src="../asset/<?= $rew['foto'] ?>" alt="">
+          </div>
+                  <div class="descrip mt-3 p-3">
+            <b><h4><?= $rew['judul'] ?></h4></b>
+            <p><?= $rew['penulis'] ?></p>
+            <p><?= $rew['penerbit'] ?></p>
+            <p>Tahun terbit: <?= $rew['tahun_terbit'] ?></p>
+            <?php 
+                $iduser = $_SESSION['id'];
+                $bukuid = $rew['id'];
+                $sql1 = "SELECT * FROM peminjaman WHERE status_peminjaman = 'Dipinjam' AND user = '$iduser' AND buku='$bukuid' ";
+                $result1 = mysqli_query($koneksi,$sql1);
+                if(mysqli_num_rows($result1) > 0){
+                 ?>
+                  <a href="proses/proses_pengembalian_peminjaman.php?id=<?= $rew['id'] ?>" class="btn btn-sm btn-danger">
+                      Kembalikan
+                  </a>
+                <?php } else { ?>
+                  <a href="proses/proses_input_peminjaman.php?id=<?= $rew['id'] ?>" class="btn btn-sm btn-primary">
+                      Pinjam
+                  </a>
+                <?php } ?>
+          </div>
         </div>
-        <?php
-            if ($result2) {
-                echo "<label for='buku'>Buku :</label>";
-                echo "<select class='form-control' name='buku' required>";
-
-                while ($rew = mysqli_fetch_assoc($result2)) {
-                    $nama_buku = $rew['judul'];
-                    $id_buku = $rew['id'];
-                    echo "<option value='$id_buku'>$nama_buku</option>";
-                    }
-
-                    echo "</select>";
-                } else {
-                    echo "Gagal mengambil data";
-                }
-        ?>
-        <div class="form-grup">
-            <label for="tanggal_peminjaman">Tanggal peminjaman :</label>
-            <input type="date" name="tanggal_peminjaman" class="form-control">
-        </div>
-        <div class="form-grup">
-            <label for="status">Status :</label>
-            <select name="status" class="form-control">
-                <option value="Dipinjam">Dipinjam</option>
-            </select>
-        </div>
-        <div class="form-grup" style="margin-left: 40%;">
-        <button type="submit" name="registrasi" class="btn btn-info mt-4" style="width:100px">Pinjam</button>
-        </div>
-    </form>
-  </div>
-  </div>
-   </section>
+      <?php endwhile ?>
+      </div>
+    </div>
+   </div>
   </div>
 </div>
 <script src="../dashboard/plugins/jquery/jquery.min.js"></script>
