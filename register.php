@@ -31,8 +31,8 @@ $result = mysqli_query($koneksi, $sql);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 1200px;
-            height: 500px;
+            width: 600px;
+            height: 550px;
         }
 
         .login-container img {
@@ -45,14 +45,14 @@ $result = mysqli_query($koneksi, $sql);
         .login-container form h1 {
             text-align: center;
             margin-top: -7px;
+            padding-top: 9px;
         }
 
         .login-container form {
             display: flex;
             flex-direction: column;
-            width: 80%;
-            margin: auto 8%;
-            padding: 30px 20px;
+            width: 95%;
+            padding: 10px;
             border-radius: 6px;
             border: 1px solid #176B87;
             height: 100%;
@@ -63,6 +63,8 @@ $result = mysqli_query($koneksi, $sql);
             border: 1px solid #ccc;
             border-radius: 50px;
             height: 35px;
+            width: 84%;
+            margin-left: 40px;
         }
 
         .login-container input{
@@ -71,6 +73,8 @@ $result = mysqli_query($koneksi, $sql);
             border: 1px solid #ccc;
             border-radius: 50px;
             height: 20px;
+            width: 80%;
+            margin-left: 40px;
             
         }
 
@@ -79,6 +83,8 @@ $result = mysqli_query($koneksi, $sql);
             height: 45px;
             padding: 10px;
             border: 1px solid #ccc;
+            width: 80%;
+            margin-left: 40px;
         }
 
         .login-container button {
@@ -103,9 +109,6 @@ $result = mysqli_query($koneksi, $sql);
             font-size: 13px;
             text-align: center;
         }
-        .foto{
-            width: 50%;
-        }
         .form{
             width: 45%;
             text-align: center;
@@ -115,8 +118,8 @@ $result = mysqli_query($koneksi, $sql);
         }
         .scrollable-form {
         max-height: 100%;
-        width: 51%;
-        overflow-y: auto;
+        width: 100%;
+        overflow-y: scroll;
         overflow-x: hidden;
         }
     </style>
@@ -124,10 +127,6 @@ $result = mysqli_query($koneksi, $sql);
 <body>
 
 <div class="login-container">
-    <div class="foto">
-        <img src="asset/rak.jpg" alt="User Image"> 
-    </div>
-
     <!-- Form Register -->
     <div class="scrollable-form">
     <form action="proses/proses_register_peminjam.php" method="post">

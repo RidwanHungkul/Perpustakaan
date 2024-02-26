@@ -155,6 +155,10 @@ $result3 = mysqli_query($koneksi, $sql3);
             <label for="judul">Judul buku:</label>
             <input type="text" name="judul" class="form-control" required>
         </div>
+          <div class="form-grup">
+            <label for="pdf">File Buku:</label>
+            <input type="file" name="pdf" class="form-control" style="height: auto;" required>
+        </div>
         <div class="form-grup">
             <label for="penulis">Penulis :</label>
             <input type="text" name="penulis" class="form-control" required>

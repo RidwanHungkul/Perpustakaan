@@ -22,20 +22,12 @@ session_start();
         }
 
         .login-container {
-            display: flex;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 1200px;
+            width: 600px;
             height: 500px;
-        }
-
-        .login-container img {
-            width: 100%;
-            border-radius: 4px; 
-            margin-right: 20px;
-            height: 100%;
         }
 
         .login-container form h1 {
@@ -46,9 +38,9 @@ session_start();
         .login-container form {
             display: flex;
             flex-direction: column;
-            width: 56%;
-            margin: 17% auto;
-            padding: 30px 20px;
+            width: 100%;
+            margin: 10% 80px;
+            padding: 30px;
             border-radius: 6px;
             border: 1px solid #176B87;
         }
@@ -82,22 +74,42 @@ session_start();
             font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin-top: 6px;
             font-size: 13px;
-        }
-        .foto{
-            width: 50%;
-        }
+        }   
         .form{
-            width: 50%;
+            width: 60%;
             text-align: center;
             padding-left: 10px;
+        }
+        .judul{
+            width: 100%;
+            height: 120px;
+        }
+        .judul h1{
+            color: black;
+            text-align: center;
+        }
+        .foto{
+            width: 70px;
+            height: 70px;
+            margin-left: 44%;
+        }
+        .foto img{
+            width: 100%;
+            height: 100%;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
 
 <div class="login-container">
-    <div class="foto">
-        <img src="asset/rak.jpg" alt="User Image"> 
+    <div class="judul">
+        <div class="foto">
+            <img src="asset/smk1.png" alt="">
+        </div>
+        <a href="index.php">
+            <h1>Semea Digital Library</h1>
+        </a>
     </div>
     <div class="form">
     <?php 

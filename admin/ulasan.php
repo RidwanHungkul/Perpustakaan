@@ -161,7 +161,6 @@ $result1 = mysqli_query($koneksi, $sql1);
                     <td><?= number_format($row['average_rating'], 1) ?></td>
                     <td>
                         <a href="modal/isi_ulasan.php?id=<?= $row['buku_id'] ?>" class="btn btn-primary btn-sm" style="margin-top:15px;"><i class="fa-solid fa-eye"></i></a>
-                        
                     </td>
                 </tr>
             <?php endwhile; ?>

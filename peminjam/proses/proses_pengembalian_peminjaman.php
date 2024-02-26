@@ -13,7 +13,6 @@ $userId = (int)$_SESSION['id'];
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $bookId = $_GET['id'];
 
-
     // Periksa apakah buku sudah dipinjam sebelumnya
     $checkPeminjamanQuery = "SELECT * FROM peminjaman WHERE user = $userId AND buku = $bookId AND status_peminjaman = 'Dipinjam'";
     $checkPeminjamanResult = mysqli_query($koneksi, $checkPeminjamanQuery);

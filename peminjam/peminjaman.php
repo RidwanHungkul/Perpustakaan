@@ -91,7 +91,7 @@ $result = mysqli_query($koneksi, $query);
     <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;">
     <!-- Brand Logo -->
     <a href="#" class="brand-link" style="background-color:#0F1035; color:#fff;">
-      <span class="brand-text font-weight-light">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
+      <span class="brand-text font-weight-light ml-4">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
     </a>
 
     <!-- Sidebar -->
@@ -157,6 +157,7 @@ $result = mysqli_query($koneksi, $query);
                       Pinjam
                   </a>
                 <?php } ?>
+                <a href="buku/baca_buku.php?id=<?= $rew['id'] ?>" class="btn btn-sm btn-primary">Baca</a>
           </div>
         </div>
       <?php endwhile ?>

@@ -217,8 +217,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                       Pinjam
                   </a>
                 <?php } ?>
-            <a href="ulasan.php?id=<?= $rew['buku_id'] ?>" class="btn btn-sm btn-success">Ulas</a>
-            <a href="sinopsis.php?id=<?=$rew['buku_id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff">Detail</a>
+            <a href="buku/ulasan.php?id=<?= $rew['buku_id'] ?>" class="btn btn-sm btn-success">Ulas</a>
+            <a href="buku/sinopsis.php?id=<?=$rew['buku_id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff">Detail</a>
                         <?php
                             // Cek apakah buku sudah ada di koleksi pribadi user
                         $checkQuery = "SELECT * FROM koleksi_pribadi WHERE user = (SELECT id FROM user WHERE username = '$username') AND buku = {$rew['buku_id']}";

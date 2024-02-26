@@ -11,30 +11,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sinopsis = $_POST['sinopsis'];
     $kategori = $_POST['kategori'];
     $cover = $_FILES['cover'];
+    $pdf = $_FILES['pdf'];
 
     // Query Untuk mengambil data lama
     $sql = "SELECT * FROM buku WHERE id = $user";
     $result = mysqli_query($koneksi, $sql);
     $fetchData = mysqli_fetch_assoc($result);
     $gambarLama = $fetchData['foto'];
+    $pdfLama = $fetchData['pdf'];
 
     if (!empty($judul) && !empty($penulis) && !empty($penerbit) && !empty($tahun_terbit) && !empty($sinopsis) && !empty($kategori)) {
 
-        // Jika ada file yang diunggah
+        // Jika ada file cover yang diunggah
         if (!empty($cover['name'])) {
             // Mengunggah foto baru
-            $targetDir = ""; // Direktori penyimpanan foto baru
-            $targetFile = $targetDir . basename($_FILES["cover"]["name"]);
-            move_uploaded_file($_FILES["cover"]["tmp_name"], $targetFile);
-            $fotoBaru = $targetFile;
-
+            $targetDirCover = ""; // Direktori penyimpanan foto baru
+            $targetFileCover = $targetDirCover . basename($_FILES["cover"]["name"]);
+            move_uploaded_file($_FILES["cover"]["tmp_name"], $targetFileCover);
+            $fotoBaru = $targetFileCover;
         } else {
-            // Jika tidak ada file yang diunggah, gunakan gambar lama
+            // Jika tidak ada file cover yang diunggah, gunakan gambar lama
             $fotoBaru = $gambarLama;
         }
 
+        // Jika ada file PDF yang diunggah
+        if (!empty($pdf['name'])) {
+            // Mengunggah file PDF baru
+            $targetDirPdf = ""; // Direktori penyimpanan file PDF baru
+            $targetFilePdf = $targetDirPdf . basename($_FILES["pdf"]["name"]);
+            move_uploaded_file($_FILES["pdf"]["tmp_name"], $targetFilePdf);
+            $pdfBaru = $targetFilePdf;
+        } else {
+            // Jika tidak ada file PDF yang diunggah, gunakan PDF lama
+            $pdfBaru = $pdfLama;
+        }
+
         // Mengupdate data buku
-        $updateSql = "UPDATE buku SET foto = '$fotoBaru', judul = '$judul', penulis = '$penulis', penerbit = '$penerbit', tahun_terbit = '$tahun_terbit', sinopsis = '$sinopsis', kategori_id = '$kategori' WHERE id = $user";
+        $updateSql = "UPDATE buku SET foto = '$fotoBaru', pdf = '$pdfBaru', judul = '$judul', penulis = '$penulis', penerbit = '$penerbit', tahun_terbit = '$tahun_terbit', sinopsis = '$sinopsis', kategori_id = '$kategori' WHERE id = $user";
 
         if (mysqli_query($koneksi, $updateSql)) {
             echo "updated successfully!";

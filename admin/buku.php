@@ -167,7 +167,7 @@ $result = mysqli_query($koneksi, $sql);
                     <tr class="searchable">
                         <td style="width: 45px;"><?= $i ?></td>
                         <td class="d-flex" style="width:321px;">
-                          <img src="../asset/<?= $row['foto'] ?>" alt="Cover Buku" style="height:50px; width:50px;margin-right:10px;border-radius:3px"> 
+                          <img src="../asset/<?= $row['foto'] ?>" alt="Cover Buku" style="height:55px; width:50px;margin-right:10px;border-radius:3px"> 
                           <div>
                             <b><?= $row['judul'] ?></b><br>
                             <?= $row['penulis'] ?>

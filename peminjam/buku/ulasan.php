@@ -1,5 +1,5 @@
 <?php 
-include '../koneksi.php';
+include '../../koneksi.php';
 session_start();
 
 $id_user = $_SESSION['id'];
@@ -34,11 +34,11 @@ $review = mysqli_query($koneksi, $view);
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="../dashboard/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../dashboard/plugins/fontawesome-free/css/all.min.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="../dashboard/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="../../dashboard/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dashboard/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../../dashboard/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="hold-transition sidebar-mini" style="overflow-y:hidden;">
@@ -50,7 +50,7 @@ $review = mysqli_query($koneksi, $view);
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
+        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../../logout.php">
           <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1;"></i>
         </a>
       </li>
@@ -71,7 +71,7 @@ $review = mysqli_query($koneksi, $view);
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item menu-open">
-            <a href="index.php" class="nav-link active">
+            <a href="../index.php" class="nav-link active">
               <i class="nav-icon fa-solid fa-house"></i>
               <p>
                 Home
@@ -79,7 +79,7 @@ $review = mysqli_query($koneksi, $view);
             </a>
           </li>
           <li class="nav-item">
-            <a href="bookmark.php" class="nav-link">
+            <a href="../bookmark.php" class="nav-link">
               <i class="nav-icon fa-solid fa-heart"></i>
               <p>
                 Favourite
@@ -87,7 +87,7 @@ $review = mysqli_query($koneksi, $view);
             </a>
           </li>
           <li class="nav-item">
-            <a href="peminjaman.php" class="nav-link">
+            <a href="../peminjaman.php" class="nav-link">
               <i class="nav-icon fa-solid fa-book"></i>
               <p>
                 Peminjaman
@@ -104,11 +104,11 @@ $review = mysqli_query($koneksi, $view);
   <?php while ($row = mysqli_fetch_assoc($result)) : ?>
   <div class="row bg-body-tertiary shadow" style="width:70%;height:470px;margin-left:160px;margin-top:57px;">
   <div class="wrap p-3">
-    <a href="index.php" style="position:relative;left:475px"><button type="button" class="close" aria-label="Close">
+    <a href="../index.php" style="position:relative;left:475px"><button type="button" class="close" aria-label="Close">
     <span aria-hidden="true">&times;</span>
     </button></a>
     <div class="foto">
-      <img src="../asset/<?=$row['foto']?>" alt="" style="width:250px;height:430px;object-fit:cover; margin-top:-20px">
+      <img src="../../asset/<?=$row['foto']?>" alt="" style="width:250px;height:430px;object-fit:cover; margin-top:-20px">
     </div>
     <div class="desc d-flex " style="position: absolute; bottom:500px;left:700px">
       <h4><b><?= $row['judul'] ?></b></h4>
@@ -148,11 +148,11 @@ $review = mysqli_query($koneksi, $view);
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
+<script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../dist/js/demo.js"></script>
+<script src="../../dist/js/demo.js"></script>
 <script src="path/to/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
