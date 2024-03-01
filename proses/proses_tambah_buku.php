@@ -9,11 +9,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $tahun_terbit = $_POST['tahun_terbit'];
     $sinopsis = $_POST['sinopsis'];
     $kategori = $_POST['kategori'];
+    $stok = $_POST['stok'];
     $cover = $_FILES["cover"];
     $pdf = $_FILES["pdf"];
 
     // Lakukan validasi dan penambahan buku
-    if (!empty($judul) && !empty($penulis) && !empty($penerbit) && !empty($tahun_terbit) && !empty($kategori) && !empty($cover) && !empty($pdf)) {
+    if (!empty($judul) && !empty($penulis) && !empty($penerbit) && !empty($tahun_terbit) && !empty($kategori) && !empty($stok) && !empty($cover) && !empty($pdf)) {
         // Memeriksa ekstensi file cover
         $allowedImageExtensions = array("jpg", "jpeg", "png", "svg");
         $imageFileExtension = strtolower(pathinfo($cover["name"], PATHINFO_EXTENSION));
@@ -32,9 +33,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if (move_uploaded_file($cover["tmp_name"], $coverTargetFile) && move_uploaded_file($pdf["tmp_name"], $pdfTargetFile)) {
                 // Query untuk menambahkan buku ke dalam database
-                $add_book_query = "INSERT INTO `buku` (perpus_id, foto, judul, penulis, penerbit, tahun_terbit, sinopsis, kategori_id, pdf)
-                               VALUES ('$perpustakaan', '$coverFileName', '$judul', '$penulis', '$penerbit', '$tahun_terbit', '$sinopsis', '$kategori', '$pdfFileName')";
-
+                $add_book_query = "INSERT INTO `buku` (perpus_id, foto, judul, penulis, penerbit, tahun_terbit, sinopsis, kategori_id, stok, pdf)
+                                   VALUES ('". mysqli_real_escape_string($koneksi, $perpustakaan) ."', '$coverFileName', '$judul', '$penulis', '$penerbit', '$tahun_terbit', '$sinopsis', '$kategori', '$stok', '$pdfFileName')";
                 // Eksekusi query dan tampilkan pesan sukses atau error
                 if (mysqli_query($koneksi, $add_book_query)) {
                     $success_message = "Buku berhasil ditambahkan.";

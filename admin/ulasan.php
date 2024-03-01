@@ -166,7 +166,7 @@ $result1 = mysqli_query($koneksi, $sql1);
             <?php endwhile; ?>
         </tbody>
     </table>
-  </div>
+  </div>x
     </div>
    </section>
   </div>

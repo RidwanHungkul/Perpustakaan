@@ -114,7 +114,7 @@ $result1 = mysqli_query($koneksi, $sql1);
             <thead>
                 <tr>
                     <th style="width: 47px;">No</th>
-                    <th style="width: 410px;">Judul</th>
+                    <th style="width: 450px;">Judul</th>
                     <th style="width: 256px;">Penerbit</th>
                     <th style="width: 115px;">Tahun Terbit</th>
                     <th>Aksi</th>

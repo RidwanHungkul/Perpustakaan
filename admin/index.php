@@ -213,9 +213,9 @@ $result4 = mysqli_query($koneksi, $sql4);
         <tr>
                 <th style="width: 52px;">No</th>
                 <th style="width: 180px">Nama Peminjam</th>
-                <th style="width: 210px">Buku</th>
-                <th style="width: 178px">Tanggal Peminjaman</th>
-                <th style="width: 184px">Tanggal Pengembalian</th>
+                <th style="width: 198px">Buku</th>
+                <th style="width: 182px">Tanggal Peminjaman</th>
+                <th style="width: 196px">Tanggal Pengembalian</th>
                 <th style="width: 148px">Status</th>
                 <th>Aksi</th>
         </tr>
@@ -234,7 +234,7 @@ $result4 = mysqli_query($koneksi, $sql4);
           while ($row = $result->fetch_assoc()){  $i++;
             echo "<tr class='searchable'>";
             echo "<td style='width: 52px;'>" . $i . "</td>";
-            echo "<td style='width: 180px'>" . (isset($row["nama_lengkap"]) ? $row["nama_lengkap"] : "") . "</td>";
+            echo "<td style='width: 175px'>" . (isset($row["nama_lengkap"]) ? $row["nama_lengkap"] : "") . "</td>";
             echo "<td style='width: 210px'>" . (isset($row["judul"]) ? $row["judul"] : "") . "</td>";
             echo "<td style='width: 178px'>" . $row["tanggal_peminjaman"] . "</td>";
             echo "<td style='width: 178px'>" . $row["tanggal_pengembalian"] . "</td>";

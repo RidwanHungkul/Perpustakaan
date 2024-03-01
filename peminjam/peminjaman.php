@@ -132,35 +132,39 @@ $result = mysqli_query($koneksi, $query);
    <div class="container" style="width:100%">
     <div class="table-container d-flex" style="margin-left:20px">
       <div class="container d-flex flex-wrap" style="position:relative; width:100%;">
-      <?php while ($rew = mysqli_fetch_assoc($result)) :  ?>
-        <div class="card ml-4" style="width:300px; position:relative;top:15px;border-radius:6px;">
-          <div class="foto">
+      <?php while ($rew = mysqli_fetch_assoc($result)) : ?>
+    <div class="card ml-4" style="width:300px; position:relative;top:15px;border-radius:6px;">
+        <div class="foto">
             <img src="../asset/<?= $rew['foto'] ?>" alt="">
-          </div>
-                  <div class="descrip mt-3 p-3">
+        </div>
+        <div class="descrip mt-3 p-3">
             <b><h4><?= $rew['judul'] ?></h4></b>
             <p><?= $rew['penulis'] ?></p>
             <p><?= $rew['penerbit'] ?></p>
             <p>Tahun terbit: <?= $rew['tahun_terbit'] ?></p>
             <?php 
-                $iduser = $_SESSION['id'];
-                $bukuid = $rew['id'];
-                $sql1 = "SELECT * FROM peminjaman WHERE status_peminjaman = 'Dipinjam' AND user = '$iduser' AND buku='$bukuid' ";
-                $result1 = mysqli_query($koneksi,$sql1);
-                if(mysqli_num_rows($result1) > 0){
-                 ?>
-                  <a href="proses/proses_pengembalian_peminjaman.php?id=<?= $rew['id'] ?>" class="btn btn-sm btn-danger">
-                      Kembalikan
-                  </a>
-                <?php } else { ?>
-                  <a href="proses/proses_input_peminjaman.php?id=<?= $rew['id'] ?>" class="btn btn-sm btn-primary">
-                      Pinjam
-                  </a>
-                <?php } ?>
-                <a href="buku/baca_buku.php?id=<?= $rew['id'] ?>" class="btn btn-sm btn-primary">Baca</a>
-          </div>
+            $iduser = $_SESSION['id'];
+            $bukuid = $rew['id'];
+            $sql1 = "SELECT * FROM peminjaman WHERE status_peminjaman = 'Dipinjam' AND user = '$iduser' AND buku='$bukuid' ";
+            $result1 = mysqli_query($koneksi,$sql1);
+            if(mysqli_num_rows($result1) > 0) {
+            ?>
+                <a href="proses/proses_pengembalian_peminjaman.php?id=<?= $rew['id'] ?>" class="btn btn-sm btn-danger">
+                    Kembalikan
+                </a>
+            <?php } else { ?>
+                <a href="proses/proses_input_peminjaman.php?id=<?= $rew['id'] ?>" class="btn btn-sm btn-primary">
+                    Pinjam
+                </a>
+            <?php } ?>
+            <!-- Tautan untuk membaca PDF -->
+            <a href="buku/baca_buku.php?id=<?= $rew['id'] ?>" class="btn btn-sm btn-primary">
+              Baca
+            </a>
         </div>
-      <?php endwhile ?>
+    </div>
+<?php endwhile ?>
+
       </div>
     </div>
    </div>

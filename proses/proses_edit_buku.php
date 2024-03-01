@@ -23,28 +23,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($judul) && !empty($penulis) && !empty($penerbit) && !empty($tahun_terbit) && !empty($sinopsis) && !empty($kategori)) {
 
         // Jika ada file cover yang diunggah
-        if (!empty($cover['name'])) {
-            // Mengunggah foto baru
-            $targetDirCover = ""; // Direktori penyimpanan foto baru
-            $targetFileCover = $targetDirCover . basename($_FILES["cover"]["name"]);
-            move_uploaded_file($_FILES["cover"]["tmp_name"], $targetFileCover);
-            $fotoBaru = $targetFileCover;
-        } else {
-            // Jika tidak ada file cover yang diunggah, gunakan gambar lama
-            $fotoBaru = $gambarLama;
-        }
+    if (!empty($cover['name'])) {
+    // Mengunggah foto baru
+        $targetDirCover = "../asset/"; // Direktori penyimpanan foto baru
+        $targetFileCover = $targetDirCover . basename($_FILES["cover"]["name"]);
+        move_uploaded_file($_FILES["cover"]["tmp_name"], $targetFileCover);
+        $fotoBaru = basename($_FILES["cover"]["name"]); // Hanya menyimpan nama file
+    } else {
+    // Jika tidak ada file cover yang diunggah, gunakan gambar lama
+        $fotoBaru = $gambarLama;
+    }
 
-        // Jika ada file PDF yang diunggah
-        if (!empty($pdf['name'])) {
-            // Mengunggah file PDF baru
-            $targetDirPdf = ""; // Direktori penyimpanan file PDF baru
-            $targetFilePdf = $targetDirPdf . basename($_FILES["pdf"]["name"]);
-            move_uploaded_file($_FILES["pdf"]["tmp_name"], $targetFilePdf);
-            $pdfBaru = $targetFilePdf;
-        } else {
-            // Jika tidak ada file PDF yang diunggah, gunakan PDF lama
-            $pdfBaru = $pdfLama;
-        }
+    // Jika ada file PDF yang diunggah
+    if (!empty($pdf['name'])) {
+    // Mengunggah file PDF baru
+        $targetDirPdf = "../asset/"; // Direktori penyimpanan file PDF baru
+        $targetFilePdf = $targetDirPdf . basename($_FILES["pdf"]["name"]);
+        move_uploaded_file($_FILES["pdf"]["tmp_name"], $targetFilePdf);
+        $pdfBaru = basename($_FILES["pdf"]["name"]); // Hanya menyimpan nama file
+    } else {
+    // Jika tidak ada file PDF yang diunggah, gunakan PDF lama
+        $pdfBaru = $pdfLama;
+    }
 
         // Mengupdate data buku
         $updateSql = "UPDATE buku SET foto = '$fotoBaru', pdf = '$pdfBaru', judul = '$judul', penulis = '$penulis', penerbit = '$penerbit', tahun_terbit = '$tahun_terbit', sinopsis = '$sinopsis', kategori_id = '$kategori' WHERE id = $user";

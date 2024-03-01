@@ -6,31 +6,34 @@ session_start();
 if(!$_SESSION["id"]){
   header("Location:../login.php");
 }
-if($_GET){
-$bukuid = $_GET["id"];
-}
 
-$query1 = isset($bukuid) ? "SELECT buku.id as buku_id, buku.judul, buku.foto, buku.tahun_terbit, buku.penulis, buku.penerbit, ulasan_buku.buku, ulasan_buku.rating,
-          AVG(ulasan_buku.rating) as rating_buku
-        FROM buku
-        LEFT JOIN ulasan_buku ON buku.id = ulasan_buku.buku
-        WHERE buku.kategori_id = '$bukuid'
-        GROUP BY buku.id" : 
+// Ambil nilai kategori dari URL jika ada
+$selectedCategory = isset($_GET['kategori']) ? $_GET['kategori'] : null;
 
-        "SELECT buku.id as buku_id, buku.judul, buku.foto, buku.tahun_terbit, buku.penulis, buku.penerbit, ulasan_buku.buku, ulasan_buku.rating,
-          AVG(ulasan_buku.rating) as rating_buku
-        FROM buku
-        LEFT JOIN ulasan_buku ON buku.id = ulasan_buku.buku
-        GROUP BY buku.id";
+// Query untuk mengambil data kategori buku
+$queryKategori = "SELECT * FROM kategori_buku";
+$resultKategori = mysqli_query($koneksi, $queryKategori);
+
+// Query untuk mengambil data buku sesuai dengan kategori yang dipilih
+$query1 = isset($selectedCategory) && $selectedCategory != 'semua' ? 
+    "SELECT buku.id as buku_id, buku.judul, buku.foto, buku.tahun_terbit, buku.penulis, buku.penerbit, ulasan_buku.buku, ulasan_buku.rating,
+    AVG(ulasan_buku.rating) as rating_buku
+    FROM buku
+    LEFT JOIN ulasan_buku ON buku.id = ulasan_buku.buku
+    WHERE buku.kategori_id = '$selectedCategory'
+    GROUP BY buku.id" : 
+
+    "SELECT buku.id as buku_id, buku.judul, buku.foto, buku.tahun_terbit, buku.penulis, buku.penerbit, ulasan_buku.buku, ulasan_buku.rating,
+    AVG(ulasan_buku.rating) as rating_buku
+    FROM buku
+    LEFT JOIN ulasan_buku ON buku.id = ulasan_buku.buku
+    GROUP BY buku.id";
 $result2 = mysqli_query($koneksi, $query1);
-
-
-$query_buku = isset($bukuid) ? "SELECT * FROM buku WHERE kategori_id = $bukuid" : "SELECT * FROM buku";
-$resultbuku = mysqli_query($koneksi,$query_buku);
 
 $username = $_SESSION['username'];  
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    // Penanganan ketika buku ditambahkan atau dihapus dari koleksi pribadi
     if (isset($_GET['id']) && isset($_GET['action'])) {
         $bookId = $_GET['id'];
         $action = $_GET['action'];
@@ -64,13 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             echo "Buku dengan ID $bukuid tidak ditemukan.";
             exit();
         }
-    } else {
-        // Jika parameter id atau action tidak valid, bisa ditangani sesuai kebutuhan (contoh: berikan pesan)
     }
-} else {
-    // Jika bukan metode GET, bisa ditangani sesuai kebutuhan (contoh: berikan pesan)
-    echo "Metode yang diterima hanya GET.";
-
 }
 
 ?>
@@ -97,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     .foto{
       overflow: hidden;
       width: 100%;
-      height: 320px;
+      height: 263px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -109,21 +106,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       transition: 0.3s linear;
     }
     .foto:hover img{
-      transform:scale(0.74);
+      transform:scale(0.69);
 
     }
     .search{
       width: 800px;
-      margin-right: 120px;
+      margin-right: 70px;
     }
     .search-form{
-      width: 100%;
+      width: 88%;
       height: 40px;
       border-radius: 50px;
       position: relative;
+      left: 10%;
       top:8px;
       padding: 20px;
       border: 1px solid grey;
+    }
+    .kategori{
+      width: 150px;
+      position: relative;
+      left: 27px  ;
+    }
+    .kategori select{
+      width: 100%;
     }
 </style>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style="overflow-x:hidden;">
@@ -132,6 +138,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   <nav class="main-header navbar navbar-expand" style="background-color:#fff">
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      <div class="kategori">
+        <select name="kategori" id="kategori" class="form-control">
+          <option value="semua">Semua</option>
+          <?php while ($wor = mysqli_fetch_assoc($resultKategori)) : ?>
+          <option value="<?= $wor['id']; ?>" <?= ($selectedCategory == $wor['id']) ? 'selected' : ''; ?>><?= $wor['nama_kategori']; ?></option>
+          <?php endwhile ?>
+        </select>
+      </div>
       <li class="search">
         <form class="form-inline" action="" method="GET">
             <input id="searchInput" class="search-form" style="position: relative; top:-1px" type="search" placeholder="Cari buku..." aria-label="Search" name="query">
@@ -193,15 +207,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       <div class="table-container d-flex" style="margin-left:20px">
         <div class="container d-flex flex-wrap" style="position:relative; width:100%;">
         <?php while ($rew = mysqli_fetch_assoc($result2)) : ?>
-        <div class="card ml-4 searchable" style="width:300px; position:relative;top:15px;border-radius:6px;">
+        <div class="card ml-2 searchable" style="width:249px; position:relative;top:15px;border-radius:6px; left:-15px;">
         <div class="foto">
             <img src="../asset/<?= $rew['foto'] ?>" alt="" style="">
         </div>
-        <div class="descrip mt-3 p-3">
+        <div class="descrip mt-3 p-3" style="text-align:center;">
             <b><h4><?= $rew['judul'] ?></h4></b>
-            <p><?= $rew['penulis'] ?></p>
+            <div class="d-flex" style="justify-content:center;">
+            <p class="mr-2"><?= $rew['penulis'] ?></p>
+            <p class="mr-2">|</p>
             <p><?= $rew['penerbit'] ?></p>
+            </div>
             <p>Tahun terbit: <?= $rew['tahun_terbit'] ?></p>
+            <div style="width:100%; ">
               <?php 
                 $iduser = $_SESSION['id'];
                 $bukuid = $rew['buku_id'];
@@ -210,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 if(mysqli_num_rows($result) > 0){
                  ?>
                   <a href="proses/proses_pengembalian_peminjaman.php?id=<?= $rew['buku_id'] ?>" class="btn btn-sm btn-secondary">
-                      Sedang dipinjam
+                     Pinjam
                   </a>
                 <?php } else { ?>
                   <a href="proses/proses_input_peminjaman.php?id=<?= $rew['buku_id'] ?>" class="btn btn-sm btn-primary">
@@ -218,7 +236,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                   </a>
                 <?php } ?>
             <a href="buku/ulasan.php?id=<?= $rew['buku_id'] ?>" class="btn btn-sm btn-success">Ulas</a>
-            <a href="buku/sinopsis.php?id=<?=$rew['buku_id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff">Detail</a>
+            <a href="buku/sinopsis.php?id=<?=$rew['buku_id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff;">Detail</a>
                         <?php
                             // Cek apakah buku sudah ada di koleksi pribadi user
                         $checkQuery = "SELECT * FROM koleksi_pribadi WHERE user = (SELECT id FROM user WHERE username = '$username') AND buku = {$rew['buku_id']}";
@@ -231,6 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                             <a  style="height:32px;" href="index.php?id=<?=$rew['buku_id'];?>&action=add" class="btn btn-secondary">
                             <i class="fa-regular fa-heart d-flex" style="align-items:center;"></i></a>
                       <?php endif; ?>
+                </div>
         </div>
     </div>
       <?php endwhile; ?>
@@ -294,6 +313,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             }
       });
    });
+</script>
+<script>
+    // Ketika kategori dipilih
+    $('#kategori').change(function() {
+        var selectedCategoryId = $(this).val(); // Ambil nilai ID kategori yang dipilih
+        window.location.href = 'index.php?kategori=' + selectedCategoryId; // Redirect dengan parameter kategori
+    });
 </script>
 </body>
 </html>

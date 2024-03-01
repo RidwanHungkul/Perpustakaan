@@ -23,7 +23,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $tanggalPeminjaman = date('Y-m-d');
 
     // Tambahkan 2 hari ke tanggal peminjaman untuk mendapatkan tanggal pengembalian
-    $tanggalPengembalian = date('Y-m-d H:i:s', strtotime($tanggalPeminjaman . ' +1 minute'));
+    $tanggalPengembalian = date('Y-m-d', strtotime($tanggalPeminjaman . ' +2 days'));
+
+    // Cek apakah buku sudah pernah dipinjam oleh pengguna sebelumnya
+    $checkPeminjamanQuery = "SELECT * FROM peminjaman WHERE user = $userId AND buku = $bookId AND status_peminjaman = 'Dipinjam'";
+    $checkPeminjamanResult = mysqli_query($koneksi, $checkPeminjamanQuery);
+
+    if (mysqli_num_rows($checkPeminjamanResult) >= 2) {
+        // Jika buku sudah dipinjam lebih dari dua kali oleh pengguna, beri pesan kesalahan
+        echo "Anda sudah meminjam buku ini sebanyak tiga kali.";
+        exit();
+    }
 
     // Cek stok buku sebelum melakukan peminjaman
     $getBookQuery = "SELECT stok FROM buku WHERE id = $bookId";
@@ -35,19 +45,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
 
         // Pastikan stok mencukupi sebelum melakukan peminjaman
         if ($stok > 0) {
-            // Kurangi stok buku
-            $updateStokQuery = "UPDATE buku SET stok = stok - 1 WHERE id = $bookId";
-            mysqli_query($koneksi, $updateStokQuery);
-            
             // Masukkan entri baru ke dalam tabel peminjaman
             $insertPeminjamanQuery = "INSERT INTO peminjaman (perpus_id, user, buku, tanggal_peminjaman, tanggal_pengembalian, status_peminjaman, created_at) VALUES ('$perpustakaan','$userId', '$bookId', '$tanggalPeminjaman', '$tanggalPengembalian', 'Dipinjam', now())";
             $resultpeminjaman = mysqli_query($koneksi, $insertPeminjamanQuery);
 
-            // Pengembalian otomatis jika melebihi 1 menit
-            $updatePengembalianQuery = "UPDATE peminjaman SET tanggal_pengembalian = NOW() WHERE buku = '$bookId' AND TIMESTAMPDIFF(MINUTE, tanggal_peminjaman, NOW()) >= 1 AND status_peminjaman = 'Dipinjam'";
-            mysqli_query($koneksi, $updatePengembalianQuery);
-
             if ($resultpeminjaman) {
+                // Kurangi stok buku karena peminjaman berhasil
+                $updateStokQuery = "UPDATE buku SET stok = stok - 1 WHERE id = $bookId";
+                mysqli_query($koneksi, $updateStokQuery);
+
                 // Peminjaman berhasil
                 header("Location: ../index.php");
                 exit();

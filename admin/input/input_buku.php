@@ -186,6 +186,12 @@ $result3 = mysqli_query($koneksi, $sql3);
             <option value="<?= $rew['id'] ?>"><?= $rew['nama_kategori'];?></option>
           <?php endwhile ?>
         </select>
+
+        <div class="form-grup">
+            <label for="stok">Stok :</label>
+            <input type="number" name="stok" class="form-control" required>
+        </div>
+
         </div>
                  
                       <div class="modal-footer">

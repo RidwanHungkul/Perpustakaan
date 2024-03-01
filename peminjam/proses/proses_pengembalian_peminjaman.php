@@ -13,19 +13,19 @@ $userId = (int)$_SESSION['id'];
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $bookId = $_GET['id'];
 
-    // Periksa apakah buku sudah dipinjam sebelumnya
+    // Periksa apakah buku sudah dipinjam sebelumnya dan masih dalam status 'Dipinjam' oleh pengguna yang sedang login
     $checkPeminjamanQuery = "SELECT * FROM peminjaman WHERE user = $userId AND buku = $bookId AND status_peminjaman = 'Dipinjam'";
     $checkPeminjamanResult = mysqli_query($koneksi, $checkPeminjamanQuery);
 
     if (mysqli_num_rows($checkPeminjamanResult) > 0) {
-        // Jika buku sudah dipinjam, tambahkan tanggal_pengembalian hari ini
+        // Jika buku sudah dipinjam oleh pengguna yang sedang login, lanjutkan dengan proses pengembalian
         $tanggalPengembalian = date('Y-m-d');
 
         // Perbarui status peminjaman menjadi 'Dikembalikan' dan tambahkan tanggal pengembalian
         $updatePeminjamanQuery = "UPDATE peminjaman SET tanggal_pengembalian = '$tanggalPengembalian', status_peminjaman = 'Dikembalikan' WHERE user = $userId AND buku = $bookId AND status_peminjaman = 'Dipinjam'";
         
         if (mysqli_query($koneksi, $updatePeminjamanQuery)) {
-            // Setelah pengembalian berhasil, tambahkan stok buku dengan satu
+            // Jika proses pengembalian berhasil, tambahkan stok buku dengan satu
             $updateStokQuery = "UPDATE buku SET stok = stok + 1 WHERE id = $bookId";
             mysqli_query($koneksi, $updateStokQuery);
 
@@ -37,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
             echo "Error: " . $updatePeminjamanQuery . "<br>" . mysqli_error($koneksi);
         }
     } else {
-        // Jika buku belum dipinjam, berikan pesan kepada pengguna atau tangani sesuai kebutuhan
-        echo "Buku belum dipinjam.";
+        // Jika buku belum dipinjam oleh pengguna yang sedang login, berikan pesan kesalahan atau tangani sesuai kebutuhan
+        echo "Buku belum dipinjam oleh Anda.";
         exit();
     }
 } else {
@@ -46,4 +46,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     header("Location: index.php");
     exit();
 }
+
 ?>

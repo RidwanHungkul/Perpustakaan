@@ -82,77 +82,87 @@ $result3 = mysqli_query($koneksi, $sql3);
   </aside>
 
   <div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="false">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <?php if($result){
-          $riw = mysqli_fetch_assoc($result1);
-        ?>
-        <div class="modal-header">
-          <h4 class="modal-title" id="editModalLabel">Tambah Buku</h4>
-            <a href="../buku.php"><button type="button" class="close" aria-label="Close">
-              <span aria-hidden="true">&times;</span></button>
-            </a>
-        </div>
-          <form action="../proses/proses_tambah_buku.php" method="post" enctype="multipart/form-data">
-            <div class="modal-body">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <?php if($result){
+                $riw = mysqli_fetch_assoc($result1);
+              ?>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="editModalLabel">Tambah Buku</h4>
+                    <a href="../buku.php"><button type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button></a>
+                </div>
+                <form action="../proses/proses_tambah_buku.php" method="post" enctype="multipart/form-data">
+                  <div class="modal-body">
                     <!-- Isi formulir edit di sini -->
-              <?php
-                if ($result) {
-                  echo "<label for='perpustakaan' style='display:none;'>Perpustakaan :</label>";
-                  echo "<select class='form-control' name='perpustakaan' style='display:none;' required>";
+                    <?php
+                    if ($result) {
+                      echo "<label for='perpustakaan' style='display:none'>Perpustakaan :</label>";
+                      echo "<select class='form-control' style='display:none' name='perpustakaan' required>";
 
-                  while ($row = mysqli_fetch_assoc($result)) {
-                    $nama_perpustakaan = $row['nama_perpus'];
-                    $id_perpus = $row['id'];
-                    echo "<option value='$id_perpus'>$nama_perpustakaan</option>";
-                  }
+                    while ($row = mysqli_fetch_assoc($result)) {
+                      $nama_perpustakaan = $row['nama_perpus'];
+                      $id_perpus = $row['id'];
+                      echo "<option value='$id_perpus'>$nama_perpustakaan</option>";
+                    }
 
-                  echo "</select>";
-                  } else {
+                    echo "</select>";
+                    } else {
                       echo "Gagal mengambil data";
                  }
               ?>
           <div class="form-grup">
-            <label for="cover">Cover :</label>
-            <input type="file" name="cover" class="form-control" style="height:auto" required>
-          </div>
+            <label for="cover">Upload Cover:</label>
+            <input type="file" name="cover" class="form-control" required style="height:auto;">
+        </div>
           <div class="form-grup">
             <label for="judul">Judul buku:</label>
             <input type="text" name="judul" class="form-control" required>
-          </div>
+        </div>
           <div class="form-grup">
+            <label for="pdf">File Buku:</label>
+            <input type="file" name="pdf" class="form-control" style="height: auto;" required>
+        </div>
+        <div class="form-grup">
             <label for="penulis">Penulis :</label>
             <input type="text" name="penulis" class="form-control" required>
-          </div>
-          <div class="form-grup">
+        </div>
+        <div class="form-grup">
             <label for="penerbit">Penerbit :</label>
             <input type="text" name="penerbit" class="form-control" required>
-          </div>
-          <div class="form-grup">
+        </div>
+        <div class="form-grup">
             <label for="tahun_terbit">Tahun terbit :</label>
             <input type="date" name="tahun_terbit" class="form-control" required>
-          </div>
-          <div class="form-grup">
+        </div>
+        <div class="form-grup">
             <label for="sinopsis" class="mt-2" style="position:absolute;">Sinopsis :</label>
             <textarea name="sinopsis" id="" cols="62" rows="5" class="mt-5"></textarea>
-        </div>  
+        </div>
 
-          <label>Kategori :</label>
-            <select class='form-control' name='kategori' required>
-            <option>pilih kategori</option>
+
+        <label>Kategori :</label>
+        <select class='form-control' name='kategori' required>
+          <option>pilih kategori</option>
           <?php
              while ($rew = mysqli_fetch_assoc($result3)):
           ?>  
             <option value="<?= $rew['id'] ?>"><?= $rew['nama_kategori'];?></option>
-
           <?php endwhile ?>
-            </select>
+        </select>
+
+        <div class="form-grup">
+            <label for="stok">Stok :</label>
+            <input type="number" name="stok" class="form-control" required>
+        </div>
+
         </div>
                  
-        <div class="modal-footer">
-          <a href="../buku.php"><button  class="btn btn-primary">Simpan Buku</button></a>
-        </div>
-            </form>
+                      <div class="modal-footer">
+                        <a href="../buku.php"><button type="submit"  class="btn btn-primary">Simpan Buku</button></a>
+                  </div>
+                  </form>
                 <?php 
                     }  
                 ?>

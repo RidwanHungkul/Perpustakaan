@@ -25,10 +25,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result1 = mysqli_query($koneksi, $sql1);
 
     $query1 = mysqli_fetch_assoc($result1);
-    $buku = $query1['id'];
-     
+    $buku_id = $query1['id'];
+    $stok = $query1['stok']; // Ambil nilai stok buku
 
-    $updateSql = "UPDATE peminjaman SET user = '$nama_lengkap', buku = '$buku' , tanggal_peminjaman='$tanggal_peminjaman', tanggal_pengembalian='$tanggal_pengembalian', status_peminjaman='$status' WHERE id = '$user'";
+    // Tambahkan 1 ke nilai stok
+    $stok += 1;
+
+    // Update stok buku di database
+    $updateStokSql = "UPDATE buku SET stok = '$stok' WHERE id = '$buku_id'";
+    if (!mysqli_query($koneksi, $updateStokSql)) {
+        echo "Error updating stock: " . mysqli_error($koneksi);
+        exit();
+    }
+
+    $updateSql = "UPDATE peminjaman SET user = '$nama_lengkap', buku = '$buku_id' , tanggal_peminjaman='$tanggal_peminjaman', tanggal_pengembalian='$tanggal_pengembalian', status_peminjaman='$status' WHERE id = '$user'";
 
     if (mysqli_query($koneksi, $updateSql)) {
         echo "updated successfully!";

@@ -28,6 +28,8 @@ $result2 = mysqli_query($koneksi, $sql2);
 $sql3 = "SELECT * FROM peminjaman WHERE status_peminjaman='Dipinjam'";
 $result3 = mysqli_query($koneksi, $sql3);
 
+$sql4 = "SELECT * FROM ulasan_buku";
+$result4 = mysqli_query($koneksi, $sql4);
 ?>
 
 <!DOCTYPE html>
@@ -119,46 +121,52 @@ $result3 = mysqli_query($koneksi, $sql3);
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- Info boxes -->
         <div class="row">
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box"  style="background-color:#40A2E3; color:#fff;">
-              <span class="info-box-icon"><i class="fas fa-users"></i></span>
 
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box"  style="background-color:#40A2E3; color:#fff; border-radius:10px">
+              <span class="info-box-icon"><i class="fas fa-users"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Pengguna</span>
                 <span class="info-box-number"><?php echo mysqli_num_rows($result1)?></span>
               </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
           </div>
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3" style="background-color:#FF9843; color:#fff;">
-              <span class="info-box-icon "><i class="fa-solid fa-book"></i></span>
 
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3" style="background-color:#FF9843; color:#fff; border-radius:10px">
+              <span class="info-box-icon "><i class="fa-solid fa-book"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Buku</span>
                 <span class="info-box-number"><?php echo mysqli_num_rows($result2)?></span>
               </div>
             </div>
           </div>
-          <div class="clearfix hidden-md-up"></div>
 
           <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3" style="background-color:#65B741; color:#fff;">
-              <span class="info-box-icon  "><i class="fa-solid fa-book"></i></span>
-
+            <div class="info-box mb-3" style="background-color:#65B741; color:#fff; border-radius:10px">
+              <span class="info-box-icon  "><i class="fa-solid fa-hand-holding-hand"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Peminjaman</span>
                 <span class="info-box-number"><?php echo mysqli_num_rows($result3)?></span>
               </div>
             </div>
           </div>
+          
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3" style="background-color:#FF6868; color:#fff; border-radius:10px">
+              <span class="info-box-icon  "><i class="fa-solid fa-comment"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Ulasan</span>
+                <span class="info-box-number"><?php echo mysqli_num_rows($result4)?></span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
+
     <div class="header d-flex p-2 mb-3 ml-4" style="width:100%; height:50px;">
     <div class="judul" style="height:30px; width:200px; position:relative; top:15px;">
         <h5>Data Peminjaman</h5>

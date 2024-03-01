@@ -100,12 +100,16 @@ $result2 = mysqli_query($koneksi, $sql2);
                     <!-- Isi formulir edit di sini -->
                     <form action="../proses/proses_edit_buku.php?id=<?= $ruw['id'] ?>" method="post" enctype="multipart/form-data">
             <div class="form-group">
+                <label for="cover">Cover :</label>
+                <input type="file" class="form-control" style="height:45px;" name="cover"  value="<?= $ruw['foto'] ?>" >
+            </div>
+            <div class="form-group">
                 <label for="judul">Judul :</label>
                 <input type="text" class="form-control" name="judul"  value="<?= $ruw['judul'] ?>">
             </div>
             <div class="form-group">
-                <label for="cover">Cover :</label>
-                <input type="file" class="form-control" name="cover"  value="<?= $ruw['foto'] ?>">
+                <label for="pdf">File buku :</label>
+                <input type="file" class="form-control" name="pdf" style="height:auto;"  value="<?= $ruw['pdf'] ?>">
             </div>
             <div class="form-group">
                 <label for="penulis">Penulis :</label>
