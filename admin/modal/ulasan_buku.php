@@ -92,14 +92,6 @@ $result4 = mysqli_query($koneksi, $sql4);
               </p>
             </a>
           </li>
-          <li class="nav-item menu">
-            <a href="../peminjaman.php" class="nav-link">
-              <i class="nav-icon fa-solid fa-book"></i>
-              <p>
-                Peminjaman
-              </p>
-            </a>
-          </li>
           <li class="nav-item menu-open">
             <a href="../buku.php" class="nav-link active">
               <i class="nav-icon fa-solid fa-book"></i>

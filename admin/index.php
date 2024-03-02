@@ -12,12 +12,9 @@ $sql = "SELECT peminjaman.*, user.nama_lengkap, buku.judul
         FROM `peminjaman`  
         INNER JOIN user ON peminjaman.user=user.id 
         INNER JOIN buku ON peminjaman.buku=buku.id 
-        ORDER BY 
-            CASE 
-                WHEN status_peminjaman = 'Dipinjam' THEN 0 
-                ELSE 1 
-            END,
-            tanggal_pengembalian DESC";
+        ORDER BY CASE WHEN status_peminjaman = 'Dipinjam' THEN 0 ELSE 1 
+        END,
+        tanggal_pengembalian DESC";
 $result = mysqli_query($koneksi, $sql);
 
 // Query untuk mengambil data user
@@ -32,6 +29,7 @@ $result2 = mysqli_query($koneksi, $sql2);
 $sql3 = "SELECT * FROM peminjaman WHERE status_peminjaman='Dipinjam'";
 $result3 = mysqli_query($koneksi, $sql3);
 
+// Query untuk mengambil data ulasan buku
 $sql4 = "SELECT * FROM ulasan_buku";
 $result4 = mysqli_query($koneksi, $sql4);
 ?>
@@ -98,14 +96,6 @@ $result4 = mysqli_query($koneksi, $sql4);
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Pengguna
-              </p>
-            </a>
-          </li>
-          <li class="nav-item menu">
-            <a href="peminjaman.php" class="nav-link">
-              <i class="nav-icon fa-solid fa-book"></i>
-              <p>
-                Peminjaman
               </p>
             </a>
           </li>

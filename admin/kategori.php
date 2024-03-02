@@ -7,6 +7,7 @@ if(!$_SESSION["id"]){
   header("Location:../login.php");
 }
 
+//Query untuk mengambil data kategori buku
 $sql = "SELECT * FROM kategori_buku";
 $result = mysqli_query($koneksi, $sql);
 
@@ -75,14 +76,6 @@ $result = mysqli_query($koneksi, $sql);
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Pengguna
-              </p>
-            </a>
-          </li>
-          <li class="nav-item menu">
-            <a href="peminjaman.php" class="nav-link">
-              <i class="nav-icon fa-solid fa-book"></i>
-              <p>
-                Peminjaman
               </p>
             </a>
           </li>

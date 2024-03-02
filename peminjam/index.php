@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             // Buku ditemukan, lanjutkan proses bookmark
             if ($action == 'add') {
                 // Jika action=add, tambahkan buku ke koleksi pribadi
-                $insertQuery = "INSERT INTO koleksi_pribadi (user, buku) VALUES ((SELECT id FROM user WHERE username = '$username'), $bukuid)";
+                $insertQuery = "INSERT INTO koleksi_pribadi (user, buku) VALUES ((SELECT id FROM user WHERE username = '$username'), $bookId)";
                 mysqli_query($koneksi, $insertQuery);
             } elseif ($action == 'delete') {
                 // Jika action=delete, hapus buku dari koleksi pribadi
