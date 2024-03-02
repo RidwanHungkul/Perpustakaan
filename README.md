@@ -15,7 +15,7 @@ Selamat datang di Perpustakaan Digital, Repositori ini adalah sebuah aplikasi pe
 1. **Kloning Repositori**: Mulailah dengan mengkloning repositori ini ke dalam komputer lokal Anda:
 2. **Import Database**: Import database yang berekstensi .sql ke dalam database MySQL:
 3. **Koneksi Database**: Edit file koneksi.php, sesuaikan konfigurasi database:
-4. **Mulai Eksplorasi**: Buka browser dan arahkan ke `http://localhost/perpustakaan/login.php` untuk mulai menjelajahi perpustakaan digital.
+4. **Mulai Eksplorasi**: Buka browser dan arahkan ke `http://localhost/perpustakaan/index.php` untuk mulai menjelajahi perpustakaan digital.
 
 ## Penggunaan
 1. Login sebagai Admin (username : iweng, password : 123), Petugas atau Peminjam.
