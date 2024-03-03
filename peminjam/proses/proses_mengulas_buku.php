@@ -7,6 +7,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $ulasan = $_POST['ulasan'];
     $rating = $_POST['rating'];
 
+    // Validasi rating di sisi server
+    if ($rating < 1 || $rating > 5) {
+        echo "<script>alert('Rating harus berada dalam kisaran 1 hingga 5.');</script>";
+        exit; // Keluar dari skrip jika rating tidak valid
+    }
 
     $sql = "INSERT INTO ulasan_buku (user, buku, ulasan, rating) VALUES ('$user', '$buku', '$ulasan', '$rating')";
 

@@ -148,7 +148,7 @@ $result4 = mysqli_query($koneksi, $sql4);
                     </div>
                     <div class="form_group">
                         <p>Rating :</p>
-                      <input type="text" name="rating" class="form-control" placeholder="Rating 1-10">
+                      <input type="text" name="rating" class="form-control" placeholder="Rating 1-5">
                     </div>
                  </div>
                   <div class="modal-footer">
@@ -256,8 +256,8 @@ $result4 = mysqli_query($koneksi, $sql4);
       var ratingInput = document.getElementsByName('rating')[0];
       var rating = parseInt(ratingInput.value);
 
-      if (isNaN(rating) || rating < 1 || rating > 10) {
-        alert('Rating harus berada dalam kisaran 1 hingga 10.');
+      if (isNaN(rating) || rating < 1 || rating > 5) {
+        alert('Rating harus berada dalam kisaran 1 hingga 5 .');
         event.preventDefault(); // Menghentikan pengiriman formulir jika rating tidak valid
       }
     });

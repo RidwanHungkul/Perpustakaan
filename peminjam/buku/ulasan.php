@@ -119,7 +119,7 @@ $review = mysqli_query($koneksi, $view);
     </div>
         <p style="position: absolute; bottom:435px;left:700px">Tahun terbit : <?= $row['tahun_terbit'] ?></p>
 
-       <form action="proses/proses_mengulas_buku.php" method="post"> 
+       <form action="../proses/proses_mengulas_buku.php" method="post"> 
         <div class="ulasan">
           <div class="form-grup">
             <input type="hidden" name="buku" value="<?= $id ?>">

@@ -108,6 +108,7 @@ $result = mysqli_query($koneksi, $sql);
           <label for="role">Role :</label>
           <select class="form-control" name="role" required>
             <option value=""></option>
+            <option value="admin">Admin</option>
             <option value="petugas">Petugas</option>
             <option value="peminjam">Peminjam</option>
           </select>

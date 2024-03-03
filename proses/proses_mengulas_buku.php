@@ -7,16 +7,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $ulasan = $_POST['ulasan'];
     $rating = $_POST['rating'];
 
+    // Validasi rating di sisi server
+    if ($rating < 1 || $rating > 5) {
+        echo "Rating harus berada dalam kisaran 1 hingga 5.";
+        exit; // Keluar dari skrip jika rating tidak valid
+    }
 
     $sql = "INSERT INTO ulasan_buku (user, buku, ulasan, rating) VALUES ('$user', '$buku', '$ulasan', '$rating')";
 
     if (mysqli_query($koneksi, $sql)) {
         header("location:../admin/buku.php");
     } else {
-        echo "Error: " . $query . "<br>" . mysqli_error($koneksi);
+        echo "Error: " . $sql . "<br>" . mysqli_error($koneksi);
     }
 
     // Tutup koneksi ke database
     mysqli_close($koneksi);
 }
 ?>
+    

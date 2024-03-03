@@ -115,7 +115,7 @@ $result2 = mysqli_query($koneksi, $sql2);
 
   <div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="false">
         <div class="modal-dialog" role="document">
-            <div class="modal-content" style="width:100%;height:550px;" >
+            <div class="modal-content" style="width:100%;height:565px;" >
               <?php if($result){
                 $ruw = mysqli_fetch_assoc($result1);
                  
