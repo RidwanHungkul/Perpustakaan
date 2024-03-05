@@ -138,16 +138,15 @@ $result2 = mysqli_query($koneksi, $sql2);
                     <div class="form_group" style="margin-top:-10px">
                       <p>Tahun Terbit : <?=$ruw['tahun_terbit'] ?></p>
                     </div>
+                    <div class="form_group" style="margin-top:-10px">
+                      <p>Kategori : <?=$ruw['nama_kategori'] ?></p>
+                    </div>
                     <p>Sinopsis : </p>
                     <div class="form_group" style="margin-top:10px; width:305px; height: 255px; text-indent:20px; overflow-y:scroll;">
                       <p><?=$ruw['sinopsis'] ?></p>
                     </div>
                  </div> 
                  </div>
-                      <div class="modal-footer" style="margin-top:-15px;">
-                        <a href="ulasan_buku.php?id=<?=$ruw['id'] ?>"><button  class="btn btn-primary">Ulas Buku</button></a>
-                        <a href="../delete/delete_buku.php?id=<?=$ruw['id'] ?>"><button type="button" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus buku ini?')">Hapus</button></a>
-                  </div>
                 <?php 
                     }  
                 ?>

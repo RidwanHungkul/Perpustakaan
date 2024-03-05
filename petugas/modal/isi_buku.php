@@ -1,17 +1,25 @@
 <?php 
-include '../koneksi.php';
+include '../../koneksi.php';
 session_start();
 
 if(!$_SESSION["id"]){
-  header("Location:../login.php");
+  header("Location:../../login.php");
 }
-
-// Query untuk mengambil data buku
+$id = $_GET["id"];
 $sql = "SELECT buku.*, kategori_buku.nama_kategori 
-        FROM buku  
+        FROM buku
         INNER JOIN kategori_buku ON buku.kategori_id = kategori_buku.id";
 $result = mysqli_query($koneksi, $sql);
+  
 
+$sql1 = "SELECT buku.*, kategori_buku.nama_kategori 
+        FROM buku 
+        INNER JOIN kategori_buku ON buku.kategori_id=kategori_buku.id 
+        WHERE buku.id='$id'";
+$result1 = mysqli_query($koneksi, $sql1);
+
+$sql2 = "SELECT * FROM kategori_buku";
+$result2 = mysqli_query($koneksi, $sql2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,31 +31,23 @@ $result = mysqli_query($koneksi, $sql);
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="../dashboard/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../dashboard/plugins/fontawesome-free/css/all.min.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="../dashboard/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="../../dashboard/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dashboard/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../../dashboard/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <style>
-    .isi:hover{
-      background-color: #525CEB;
-      color:#FFf;
-    }
-    .search-form:focus{
-    outline: 2px solid #40A2E3;
-  }
-  </style>
-
 </head>
-<body class="hold-transition sidebar-mini" style="overflow-y:hidden;">
+<body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-light" style="background-color:#fff">
+    <!-- Left navbar links -->
+
+    <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../logout.php">
+        <a class="nav-link" onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="../../../logout.php">
           <i class="fa-solid fa-arrow-right-from-bracket" style="color:#7077A1;"></i>
         </a>
       </li>
@@ -56,7 +56,7 @@ $result = mysqli_query($koneksi, $sql);
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;position:fixed;">
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0F1035;position:fixed;">
     <!-- user -->
     <a href="#" class="brand-link" style="background-color:#0F1035; color:#fff;">
       <span class="brand-text font-weight-light ml-4">Hi <?= $_SESSION['nama_lengkap'] ?> !</span>
@@ -88,6 +88,45 @@ $result = mysqli_query($koneksi, $sql);
     </div>
   </aside>
 
+
+  <div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="width:100%;height:565px;" >
+              <?php if($result){
+                $ruw = mysqli_fetch_assoc($result1);
+                 
+              ?>
+                <div class="modal-header">
+                    <h3 class="modal-title" id="editModalLabel"><?=$ruw['judul'] ?></h3>
+                    <a href="../buku.php"><button type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button></a>
+                </div>
+                <div class="modal-body d-flex">
+                <div class="foto" style="width: 135px; height:200px;">
+                  <img src="../../asset/<?= $ruw['foto'] ?>" alt="" style="width:100%; height:100%">
+                </div>
+                  <div class="modal-body" style="width:250px;margin-top:-19px;">
+                    <!-- Isi formulir edit di sini -->
+                    <div class="form_group">
+                      <p> <?=$ruw['penulis'] ?> | <?=$ruw['penerbit'] ?> | <?=$ruw['nama_kategori'] ?></p>
+                    </div>
+                    <div class="form_group" style="margin-top:-10px">
+                      <p>Tahun Terbit : <?=$ruw['tahun_terbit'] ?></p>
+                    </div>
+                    <p>Sinopsis : </p>
+                    <div class="form_group" style="margin-top:10px; width:305px; height: 255px; text-indent:20px; overflow-y:scroll;">
+                      <p><?=$ruw['sinopsis'] ?></p>
+                    </div>
+                 </div> 
+                 </div>
+                <?php 
+                    }  
+                ?>
+            </div>
+        </div>
+    </div>
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper " style="height:91.6vh; background-color: #fff; color:#161A30;">
     <!-- Content Header (Page header) -->
@@ -96,7 +135,7 @@ $result = mysqli_query($koneksi, $sql);
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 style="color:#161A30;">Semua Buku</h1>
-            <a href="input/input_buku.php">
+            <a href="../input/input_buku.php">
               <button type="button" class="btn btn-primary" style="margin-left:186%;margin-top:-30px;position:absolute;"><i class="fa-solid fa-plus"></i></button>
             </a>
           </div>            
@@ -132,7 +171,7 @@ $result = mysqli_query($koneksi, $sql);
                     <tr class="searchable">
                         <td style="width: 45px;"><?= $i ?></td>
                         <td class="d-flex" style="width:321px;">
-                          <img src="../asset/<?= $row['foto'] ?>" alt="Cover Buku" style="height:55px; width:50px;margin-right:10px;border-radius:3px"> 
+                          <img src="../../asset/<?= $row['foto'] ?>" alt="Cover Buku" style="height:50px; width:50px;margin-right:10px;border-radius:3px"> 
                           <div>
                             <b><?= $row['judul'] ?></b><br>
                             <?= $row['penulis'] ?>
@@ -143,9 +182,9 @@ $result = mysqli_query($koneksi, $sql);
                         <td style="width: 115px;"><?= $row['tahun_terbit'] ?></td>
                         <td style="width: 115px;"><?= $row['nama_kategori'] ?></td>
                         <td>
-                            <a href="edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-sm" style="background-color:#86A7FC; color:#fff;"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="delete/delete_buku.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
-                            <a href="modal/isi_buku.php?id=<?=$row['id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff"><i class="fa-solid fa-eye"></i></a>
+                            <a href="../edit/edit_buku.php?id=<?= $row['id'] ?>" class="btn btn-sm" style='background-color:#86A7FC; color:#fff'><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="../delete/delete_buku.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fa-solid fa-trash"></i></a>
+                            <a href="isi_buku.php?id=<?=$row['id'] ?>" class="btn btn-sm" style="background-color:#FE7A36; color:#fff"><i class="fa-solid fa-eye"></i></a>
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -155,60 +194,22 @@ $result = mysqli_query($koneksi, $sql);
     </section>
   </div>
 </div>
+<!-- ./wrapper -->
 
-<!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
-<script src="../dashboard/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="../dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- overlayScrollbars -->
-<script src="../dashboard/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../dashboard/dist/js/adminlte.js"></script>
-
-<!-- PAGE PLUGINS -->
-<!-- jQuery Mapael -->
-<script src="../dashboard/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-<script src="../dashboard/plugins/raphael/raphael.min.js"></script>
-<script src="../dashboard/plugins/jquery-mapael/jquery.mapael.min.js"></script>
-<script src="../dashboard/plugins/jquery-mapael/maps/usa_states.min.js"></script>
-<!-- ChartJS -->
-<script src="../dashboard/plugins/chart.js/Chart.min.js"></script>
-
+<script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../dashboard/dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../dashboard/dist/js/pages/dashboard2.js"></script>
+<script src="../../dist/js/demo.js"></script>
+<script src="path/to/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-  $(document).ready(function(){
-        // Add an input event listener to the search input
-        $("#searchInput").on("input", function() {
-            let searchTerm = $(this).val().toLowerCase(); // Get the value of the input and convert to lowercase
-
-            // Keep track if any results are found
-            let resultsFound = false;
-
-            // Loop through each searchable card
-            $(".searchable").each(function() {
-                let cardText = $(this).text().toLowerCase(); // Get the text content of the card and convert to lowercase
-
-                // Check if the card text contains the search term
-                if (cardText.includes(searchTerm)) {
-                    $(this).show(); // If yes, show the card
-                    resultsFound = true; // Mark that results are found
-                } else {
-                    $(this).hide(); // If no, hide the card
-                }
-            });
-
-            // Show/hide the no results message based on resultsFound
-            if (resultsFound) {
-                $("#noResultsMessage").hide();
-            } else {
-                $("#noResultsMessage").show();
-            }
-      });
-   });
-</script>
+        $(document).ready(function(){
+            $('#editModal').modal('show');
+        });
+    </script>
 </body>
 </html>
