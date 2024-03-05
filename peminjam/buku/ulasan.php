@@ -9,19 +9,11 @@ if(!$_SESSION["id"]){
 }
 $id = $_GET["id"];
 
-$query = "SELECT buku.id, buku.judul, buku.penulis, buku.foto, buku.penerbit, buku.tahun_terbit, ulasan_buku.buku, ulasan_buku.rating,
-          AVG(ulasan_buku.rating) as rating_buku
+$query = "SELECT buku.id, buku.judul, buku.penulis, buku.foto, buku.penerbit, buku.tahun_terbit
         FROM buku
-        LEFT JOIN ulasan_buku ON buku.id = ulasan_buku.buku
         WHERE buku.id = '$id'
         GROUP BY buku.id";
 $result = mysqli_query($koneksi, $query);
-
-$view = "SELECT user.nama_lengkap, ulasan_buku.ulasan, ulasan_buku.rating
-         FROM ulasan_buku
-         INNER JOIN user ON ulasan_buku.user = user.id
-         WHERE ulasan_buku.buku = '$id'";
-$review = mysqli_query($koneksi, $view);
 
 ?>
 <!DOCTYPE html>

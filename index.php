@@ -290,22 +290,22 @@ $view = mysqli_query($koneksi, $query);
                 <img src="asset/smk1.png" alt="">
             </div>
             <div class="brand">
-                <h3>Semea Digital Library</h3>
+                <h3>Smea Digital Library</h3>
                 <marquee onmouseover="true" class="running-text">
                     <span class="text1">
                         Sambut era digital dengan akses tak terbatas ke pengetahuan!
-                        SEMEA Digital Library, platform canggih yang menghadirkan 
+                        SMEA Digital Library, platform canggih yang menghadirkan 
                         ribuan judul buku, jurnal, dan artikel secara online.
                     </span>
                     <span class="text2">
                         Jelajahi koleksi luas kami dari kenyamanan rumah Anda, 
                         dengan fitur pencarian yang intuitif dan akses 24/7. 
-                        Dengan SEMEA Digital Library, pengetahuan ada di ujung jari Anda. 
+                        Dengan SMEA Digital Library, pengetahuan ada di ujung jari Anda. 
                         Bergabunglah dengan komunitas pembelajar online kami dan temukan
                         inspirasi baru setiap hari
                     </span>
                     <span class="text2">
-                        Ayo, mulai petualangan literasi digital Anda sekarang dengan SEMEA Digital Library!
+                        Ayo, mulai petualangan literasi digital Anda sekarang dengan SMEA Digital Library!
                     </span>
                 </marquee>
             </div>
@@ -320,9 +320,9 @@ $view = mysqli_query($koneksi, $query);
         <div class="main">
             <div class="main-conten">
                 <div class="deskripsi">
-                    <p><span>Semea Digital Library </span> menyediakan akses online ke berbagai jenis materi bacaan,
+                    <p><span>Smea Digital Library </span> menyediakan akses online ke berbagai jenis materi bacaan,
                       seperti buku, jurnal, artikel, dan lain sebagainya.
-                      Semea Digital Library dapat diakses melalui internet, 
+                      Smea Digital Library dapat diakses melalui internet, 
                       memungkinkan pengguna untuk mencari, membaca, dan bahkan 
                       mengunduh materi yang mereka butuhkan tanpa harus pergi ke
                       perpustakaan fisik.</p>
@@ -360,9 +360,9 @@ $view = mysqli_query($koneksi, $query);
                     <img src="asset/smk1.png" alt="">
                 </div>
                 <div class="tentang">
-                    <p>Bergabunglah dengan SEMEA Digital Library!
+                    <p>Bergabunglah dengan SMEA Digital Library!
                        Kami mengundang Anda untuk bergabung dengan 
-                       SEMEA Digital Library dan menjadi bagian dari 
+                       SMEA Digital Library dan menjadi bagian dari 
                        komunitas yang berkomitmen untuk memajukan 
                        pendidikan dan pengetahuan di era digital. 
                     </p>

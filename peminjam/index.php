@@ -16,17 +16,13 @@ $resultKategori = mysqli_query($koneksi, $queryKategori);
 
 // Query untuk mengambil data buku sesuai dengan kategori yang dipilih
 $query1 = isset($selectedCategory) && $selectedCategory != 'semua' ? 
-    "SELECT buku.id as buku_id, buku.judul, buku.foto, buku.tahun_terbit, buku.penulis, buku.penerbit, ulasan_buku.buku, ulasan_buku.rating,
-    AVG(ulasan_buku.rating) as rating_buku
+    "SELECT buku.id as buku_id, buku.judul, buku.foto, buku.tahun_terbit, buku.penulis, buku.penerbit
     FROM buku
-    LEFT JOIN ulasan_buku ON buku.id = ulasan_buku.buku
     WHERE buku.kategori_id = '$selectedCategory'
     GROUP BY buku.id" : 
 
-    "SELECT buku.id as buku_id, buku.judul, buku.foto, buku.tahun_terbit, buku.penulis, buku.penerbit, ulasan_buku.buku, ulasan_buku.rating,
-    AVG(ulasan_buku.rating) as rating_buku
+    "SELECT buku.id as buku_id, buku.judul, buku.foto, buku.tahun_terbit, buku.penulis, buku.penerbit
     FROM buku
-    LEFT JOIN ulasan_buku ON buku.id = ulasan_buku.buku
     GROUP BY buku.id";
 $result2 = mysqli_query($koneksi, $query1);
 
@@ -55,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 mysqli_query($koneksi, $insertQuery);
             } elseif ($action == 'delete') {
                 // Jika action=delete, hapus buku dari koleksi pribadi
-                $deleteQuery = "DELETE FROM koleksi_pribadi WHERE user = (SELECT id FROM user WHERE username = '$username') AND buku = $bukuid";
+                $deleteQuery = "DELETE FROM koleksi_pribadi WHERE user = (SELECT id FROM user WHERE username = '$username') AND buku = $bookId";
                 mysqli_query($koneksi, $deleteQuery);
             }
 
@@ -64,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             exit();
         } else {
             // Jika buku dengan ID tertentu tidak ditemukan, bisa ditangani sesuai kebutuhan (contoh: berikan pesan)
-            echo "Buku dengan ID $bukuid tidak ditemukan.";
+            echo "Buku dengan ID $bookId tidak ditemukan.";
             exit();
         }
     }
